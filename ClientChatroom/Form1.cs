@@ -21,5 +21,15 @@ namespace ClientChatroom
         {
 
         }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
+        private void sendButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
