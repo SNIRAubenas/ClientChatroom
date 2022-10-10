@@ -27,7 +27,7 @@ namespace ClientChatroom
 
         private void sendButton_Click(object sender, EventArgs e)
         {
-
+            communication.envoyer(MessageTextBox.Text,textBox1.Text);
         }
 
         private void ConnectButton_Click(object sender, EventArgs e)
@@ -35,8 +35,20 @@ namespace ClientChatroom
             Regex ipV4 = new Regex("^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
             if (ipV4.IsMatch(IPTextBox.Text))
             {
-                label2.Visible = false;
-                communication.conection(IPTextBox.Text);
+                Connexion.Enabled = false;
+                bool marche = communication.conection(IPTextBox.Text);
+                if (marche)
+                {
+                    label2.Visible = false;
+                    MessageTextBox.Enabled = true;
+                    sendButton.Enabled = true;
+                    Connexion.Enabled = false;
+
+                }
+                else
+                {
+                    Connexion.Enabled = true;
+                }
             }
             else
             {

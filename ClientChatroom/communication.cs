@@ -23,27 +23,34 @@ namespace ClientChatroom
             this.form1 = form1;
         }
 
-        public void conection(String text)
+        public bool conection(String text)
         {
-            IPAddress iplocal = IPAddress.Parse(text);
-            IPEndPoint ep = new IPEndPoint(iplocal, 18);
-            client = new TcpClient();
-            client.Connect(ep);
-            flux = client.GetStream();
-            Thread thread = new Thread(() => resevoire());
-            thread.Start();
+            try
+            {
+                IPAddress iplocal = IPAddress.Parse(text);
+                IPEndPoint ep = new IPEndPoint(iplocal, 18);
+                client = new TcpClient();
+                client.Connect(ep);
+                flux = client.GetStream();
+                Thread thread = new Thread(() => resevoire());
+                thread.Start();
 
-
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
 
-        public void envoyer(String text)
+        public void envoyer(String text,String pseudo)
         {
-            byte[] buffer = ASCIIEncoding.ASCII.GetBytes(text);
+            byte[] buffer = ASCIIEncoding.ASCII.GetBytes(pseudo + "\n" + text + "\n");
             flux.Write(buffer, 0, buffer.Length);
         }
         public void deconection()
         {
-
+            flux.Close();
         }
         public void resevoire()
         {
@@ -52,10 +59,10 @@ namespace ClientChatroom
                 try
                 {
                     byte[] buffer = new byte[1024];
-                    flux.Write(buffer, 0, buffer.Length);
+                    flux.Read(buffer, 0, buffer.Length);
                     form1.Invoke((MethodInvoker)delegate
                     {
-                        form1.richTextBox1.Text = ASCIIEncoding.ASCII.GetString(buffer);
+                        form1.richTextBox1.Text += ASCIIEncoding.ASCII.GetString(buffer);
                     });
 
                 }
@@ -65,7 +72,7 @@ namespace ClientChatroom
                 }
 
             }while(true);
-
+            deconection();
         }
     }
 }
