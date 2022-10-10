@@ -241,7 +241,6 @@
         private System.Windows.Forms.TextBox MessageTextBox;
         private System.Windows.Forms.Button sendButton;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label3;
@@ -250,6 +249,7 @@
         private System.Windows.Forms.PictureBox Canvas;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        public System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 
