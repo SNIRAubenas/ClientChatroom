@@ -13,9 +13,11 @@ namespace ClientChatroom
 {
     public partial class Form1 : Form
     {
+        communication communication;
         public Form1()
         {
             InitializeComponent();
+            communication = new communication(this);
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -36,9 +38,7 @@ namespace ClientChatroom
                 communication com = new communication();
 
                 label2.Visible = false;
-
-                com.conection(IPTextBox.Text,(int) numericUpDown1.Value);
-                
+                communication.conection(IPTextBox.Text);
             }
             else
             {
