@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,19 +20,19 @@ namespace ClientChatroom
             communication = new communication();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             communication.conection(textBox1.Text);
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private void sendButton_Click(object sender, EventArgs e)
         {
 
         }
 
         private void sendButton_Click(object sender, EventArgs e)
         {
-            communication.envoyer(textBox2.Text);
+
         }
     }
 }
