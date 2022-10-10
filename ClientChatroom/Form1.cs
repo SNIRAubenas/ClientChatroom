@@ -13,26 +13,36 @@ namespace ClientChatroom
 {
     public partial class Form1 : Form
     {
-        communication communication;
         public Form1()
         {
             InitializeComponent();
-            communication = new communication();
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            communication.conection(textBox1.Text);
-        }
-
-        private void sendButton_Click(object sender, EventArgs e)
-        {
 
         }
 
         private void sendButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ConnectButton_Click(object sender, EventArgs e)
+        {
+            Regex ipV4 = new Regex("^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+            if (ipV4.IsMatch(IPTextBox.Text))
+            {
+                label2.Visible = false;
+                //Methode connect
+            }
+            else
+            {
+                label2.Text = "Adresse IP invalide";
+                label2.ForeColor = Color.Red;
+                label2.Visible = true;
+            }
         }
     }
 }
+
