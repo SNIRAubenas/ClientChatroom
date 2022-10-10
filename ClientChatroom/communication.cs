@@ -23,7 +23,7 @@ namespace ClientChatroom
             this.form1 = form1;
         }
 
-        public bool conection(String text)
+        public void conection(String text,int port)
         {
             try
             {

@@ -27,7 +27,14 @@ namespace ClientChatroom
 
         private void sendButton_Click(object sender, EventArgs e)
         {
-            communication.envoyer(MessageTextBox.Text,textBox1.Text);
+            if(MessageTextBox.Text.Length > 0)
+            {
+                communication.envoyer(MessageTextBox.Text);
+
+            }
+
+
+
         }
 
         private void ConnectButton_Click(object sender, EventArgs e)
@@ -58,16 +65,21 @@ namespace ClientChatroom
             }
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void Canvas_Click(object sender, EventArgs e)
         {
-            
+       
 
 
+        }
+
+        private void MessageTextBox_Validated(object sender, EventArgs e)
+        {
+            if (MessageTextBox.Text.Length > 0)
+            {
+                communication.envoyer(MessageTextBox.Text);
+
+            }
         }
     }
 }
