@@ -45,6 +45,18 @@ namespace ClientChatroom
                 label2.Visible = true;
             }
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Canvas_Click(object sender, EventArgs e)
+        {
+            
+
+
+        }
     }
 }
 
