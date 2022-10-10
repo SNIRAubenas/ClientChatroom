@@ -29,7 +29,7 @@ namespace ClientChatroom
         {
             if(MessageTextBox.Text.Length > 0)
             {
-                communication.envoyer(MessageTextBox.Text);
+                communication.envoyer(MessageTextBox.Text,textBox1.Text);
 
             }
 
@@ -42,16 +42,20 @@ namespace ClientChatroom
             Regex ipV4 = new Regex("^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
             if (ipV4.IsMatch(IPTextBox.Text))
             {
+                Connexion.Enabled = false;
+                bool marche = communication.conection(IPTextBox.Text,(int)numericUpDown1.Value);
+                if (marche)
+                {
+                    label2.Visible = false;
+                    MessageTextBox.Enabled = true;
+                    sendButton.Enabled = true;
+                    Connexion.Enabled = false;
 
-
-                label2.Visible = false;
-                communication.conection(IPTextBox.Text,(int)numericUpDown1.Value);
-                Deconnexion.Visible = true;
-                Connexion.Visible = false;
-                IPTextBox.Enabled = false;
-                numericUpDown1.Enabled = false;
-
-
+                }
+                else
+                {
+                    Connexion.Enabled = true;
+                }
             }
             else
             {
@@ -73,7 +77,7 @@ namespace ClientChatroom
         {
             if (MessageTextBox.Text.Length > 0)
             {
-                communication.envoyer(MessageTextBox.Text);
+                communication.envoyer(MessageTextBox.Text, textBox1.Text);
 
             }
         }
