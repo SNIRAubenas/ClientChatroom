@@ -44,6 +44,7 @@
             this.Canvas = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.Deconnexion = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
@@ -202,11 +203,23 @@
             this.button2.Text = "▬";
             this.button2.UseVisualStyleBackColor = true;
             // 
+            // Deconnexion
+            // 
+            this.Deconnexion.Location = new System.Drawing.Point(278, 390);
+            this.Deconnexion.Name = "Deconnexion";
+            this.Deconnexion.Size = new System.Drawing.Size(75, 23);
+            this.Deconnexion.TabIndex = 15;
+            this.Deconnexion.Text = "Deconnexion";
+            this.Deconnexion.UseVisualStyleBackColor = true;
+            this.Deconnexion.Visible = false;
+            this.Deconnexion.Click += new System.EventHandler(this.Disconnect_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 461);
+            this.Controls.Add(this.Deconnexion);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Canvas);
@@ -251,6 +264,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         public System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button Deconnexion;
     }
 }
 

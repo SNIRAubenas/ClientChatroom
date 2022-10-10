@@ -46,7 +46,10 @@ namespace ClientChatroom
 
                 label2.Visible = false;
                 communication.conection(IPTextBox.Text,(int)numericUpDown1.Value);
-
+                Deconnexion.Visible = true;
+                Connexion.Visible = false;
+                IPTextBox.Enabled = false;
+                numericUpDown1.Enabled = false;
 
 
             }
@@ -73,6 +76,14 @@ namespace ClientChatroom
                 communication.envoyer(MessageTextBox.Text);
 
             }
+        }
+
+        private void Disconnect_Click(object sender, EventArgs e)
+        {
+            Deconnexion.Visible = false;
+            Connexion.Visible = true;
+            IPTextBox.Enabled = true;
+            numericUpDown1.Enabled = true;
         }
     }
 }
