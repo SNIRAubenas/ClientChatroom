@@ -30,12 +30,12 @@
         {
             this.Connexion = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.IPTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.MessageTextBox = new System.Windows.Forms.TextBox();
             this.sendButton = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +56,14 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(456, 456);
             this.panel1.TabIndex = 1;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(4, 4);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(449, 449);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "";
             // 
             // IPTextBox
             // 
@@ -97,14 +105,6 @@
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(4, 4);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(449, 449);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -135,7 +135,7 @@
         private System.Windows.Forms.TextBox MessageTextBox;
         private System.Windows.Forms.Button sendButton;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        public System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 

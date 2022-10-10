@@ -13,9 +13,11 @@ namespace ClientChatroom
 {
     public partial class Form1 : Form
     {
+        communication communication;
         public Form1()
         {
             InitializeComponent();
+            communication = new communication(this);
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -34,7 +36,7 @@ namespace ClientChatroom
             if (ipV4.IsMatch(IPTextBox.Text))
             {
                 label2.Visible = false;
-                //Methode connect
+                communication.conection(IPTextBox.Text);
             }
             else
             {

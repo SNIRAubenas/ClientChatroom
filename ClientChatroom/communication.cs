@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
+using System.Threading;
 
 namespace ClientChatroom
 {
@@ -13,10 +15,12 @@ namespace ClientChatroom
     {
         TcpClient client;
         NetworkStream flux;
+        private Form1 form1;
 
-        public communication()
+
+        public communication(Form1 form1)
         {
-
+            this.form1 = form1;
         }
 
         public void conection(String text)
@@ -26,6 +30,9 @@ namespace ClientChatroom
             client = new TcpClient();
             client.Connect(ep);
             flux = client.GetStream();
+            Thread thread = new Thread(() => resevoire());
+            thread.Start();
+
 
         }
 
@@ -40,6 +47,24 @@ namespace ClientChatroom
         }
         public void resevoire()
         {
+            do
+            {
+                try
+                {
+                    byte[] buffer = new byte[1024];
+                    flux.Write(buffer, 0, buffer.Length);
+                    form1.Invoke((MethodInvoker)delegate
+                    {
+                        form1.richTextBox1.Text = ASCIIEncoding.ASCII.GetString(buffer);
+                    });
+
+                }
+                catch
+                {
+                    break;
+                }
+
+            }while(true);
 
         }
     }
