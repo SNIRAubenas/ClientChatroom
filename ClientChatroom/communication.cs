@@ -19,10 +19,10 @@ namespace ClientChatroom
 
         }
 
-        public void conection(String text)
+        public void conection(String text,int port)
         {
             IPAddress iplocal = IPAddress.Parse(text);
-            IPEndPoint ep = new IPEndPoint(iplocal, 18);
+            IPEndPoint ep = new IPEndPoint(iplocal, port);
             client = new TcpClient();
             client.Connect(ep);
             flux = client.GetStream();
