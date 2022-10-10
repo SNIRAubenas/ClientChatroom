@@ -30,9 +30,9 @@
         {
             this.Connexion = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.IPTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.MessageTextBox = new System.Windows.Forms.TextBox();
             this.sendButton = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
@@ -45,7 +45,7 @@
             this.Connexion.TabIndex = 0;
             this.Connexion.Text = "Connexion";
             this.Connexion.UseVisualStyleBackColor = true;
-            this.Connexion.Click += new System.EventHandler(this.button1_Click);
+            this.Connexion.Click += new System.EventHandler(this.ConnectButton_Click);
             // 
             // panel1
             // 
@@ -54,13 +54,13 @@
             this.panel1.Size = new System.Drawing.Size(456, 456);
             this.panel1.TabIndex = 1;
             // 
-            // textBox1
+            // IPTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(64, 390);
-            this.textBox1.MaxLength = 19;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(173, 20);
-            this.textBox1.TabIndex = 2;
+            this.IPTextBox.Location = new System.Drawing.Point(64, 390);
+            this.IPTextBox.MaxLength = 19;
+            this.IPTextBox.Name = "IPTextBox";
+            this.IPTextBox.Size = new System.Drawing.Size(173, 20);
+            this.IPTextBox.TabIndex = 2;
             // 
             // label2
             // 
@@ -72,13 +72,13 @@
             this.label2.Text = "label2";
             this.label2.Visible = false;
             // 
-            // textBox2
+            // MessageTextBox
             // 
-            this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(63, 329);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(174, 20);
-            this.textBox2.TabIndex = 5;
+            this.MessageTextBox.Enabled = false;
+            this.MessageTextBox.Location = new System.Drawing.Point(63, 329);
+            this.MessageTextBox.Name = "MessageTextBox";
+            this.MessageTextBox.Size = new System.Drawing.Size(174, 20);
+            this.MessageTextBox.TabIndex = 5;
             // 
             // sendButton
             // 
@@ -100,9 +100,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 461);
             this.Controls.Add(this.sendButton);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.MessageTextBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.IPTextBox);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Connexion);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -118,9 +118,9 @@
 
         private System.Windows.Forms.Button Connexion;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox IPTextBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox MessageTextBox;
         private System.Windows.Forms.Button sendButton;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
