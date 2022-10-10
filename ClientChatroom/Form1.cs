@@ -29,7 +29,7 @@ namespace ClientChatroom
         {
             if(MessageTextBox.Text.Length > 0)
             {
-                communication.envoyer(MessageTextBox.Text);
+                communication.envoyer(MessageTextBox.Text,textBox1.Text);
 
             }
 
@@ -43,7 +43,7 @@ namespace ClientChatroom
             if (ipV4.IsMatch(IPTextBox.Text))
             {
                 Connexion.Enabled = false;
-                bool marche = communication.conection(IPTextBox.Text);
+                bool marche = communication.conection(IPTextBox.Text,(int)numericUpDown1.Value);
                 if (marche)
                 {
                     label2.Visible = false;
@@ -77,7 +77,7 @@ namespace ClientChatroom
         {
             if (MessageTextBox.Text.Length > 0)
             {
-                communication.envoyer(MessageTextBox.Text);
+                communication.envoyer(MessageTextBox.Text, textBox1.Text);
 
             }
         }
