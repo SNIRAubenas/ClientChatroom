@@ -27,6 +27,13 @@ namespace ClientChatroom
 
         private void sendButton_Click(object sender, EventArgs e)
         {
+            if(MessageTextBox.Text.Length > 0)
+            {
+                communication.envoyer(MessageTextBox.Text);
+
+            }
+
+
 
         }
 
@@ -35,10 +42,13 @@ namespace ClientChatroom
             Regex ipV4 = new Regex("^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
             if (ipV4.IsMatch(IPTextBox.Text))
             {
-                communication com = new communication();
+
 
                 label2.Visible = false;
-                communication.conection(IPTextBox.Text);
+                communication.conection(IPTextBox.Text,(int)numericUpDown1.Value);
+
+
+
             }
             else
             {
@@ -48,16 +58,21 @@ namespace ClientChatroom
             }
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void Canvas_Click(object sender, EventArgs e)
         {
-            Canvas.DrawToBitmap(Canvas, new Rectangle(50, 50, 10, 10));
+       
 
 
+        }
+
+        private void MessageTextBox_Validated(object sender, EventArgs e)
+        {
+            if (MessageTextBox.Text.Length > 0)
+            {
+                communication.envoyer(MessageTextBox.Text);
+
+            }
         }
     }
 }
