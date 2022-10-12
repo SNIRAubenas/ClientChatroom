@@ -68,15 +68,14 @@ namespace ClientChatroom
                     byte[] buffer = new byte[1024];
                     flux.Read(buffer, 0, buffer.Length);
                     String message = ASCIIEncoding.Unicode.GetString(buffer);
-                    ;
 
                     String[] split = message.Split('​');
 
                     form1.Invoke((MethodInvoker)delegate
                     {
-                        form1.richTextBox1.Text += split[0];
-                        form1.richTextBox1.Text += "\n";
                         form1.richTextBox1.Text += split[1];
+                        form1.richTextBox1.Text += "\n";
+                        form1.richTextBox1.Text += split[0];
                         form1.richTextBox1.Text += "\n";
 
                     });
