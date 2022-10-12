@@ -31,11 +31,13 @@ namespace SeurveurChatroom
                     communication.init();
                     button.Text = "OFF";
                     OnOff.BackColor = Color.Green;
+                    workin = true;
                     return;
                 }
                 else
                 {
-                    //Eteint le serv
+                    workin = false;
+                    //communication.
                 }
             }
             catch

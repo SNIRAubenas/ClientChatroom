@@ -23,10 +23,6 @@ namespace ClientChatroom
         {
             this.form1 = form1;
         }
-        public void close()
-        {
-            
-        }
 
         public bool conection(String text,int port)
         {
@@ -50,7 +46,7 @@ namespace ClientChatroom
 
         public void envoyer(String text,String pseudo)
         {
-            byte[] buffer = ASCIIEncoding.ASCII.GetBytes(pseudo + ";" + text + "\n");
+            byte[] buffer = ASCIIEncoding.ASCII.GetBytes(pseudo + ";" + text + ";" + "" + ";" + "" + "\n");
             flux.Write(buffer, 0, buffer.Length);
         }
         public void deconection()
@@ -66,12 +62,15 @@ namespace ClientChatroom
                     byte[] buffer = new byte[1024];
                     flux.Read(buffer, 0, buffer.Length);
                     String message = ASCIIEncoding.ASCII.GetString(buffer);
-                    List<String> strings = new List<String>();
-                    //strings = message.Split(";");
+                    String[] split = message.Split(';');
 
                     form1.Invoke((MethodInvoker)delegate
                     {
-                        form1.richTextBox1.Text += message;
+                        form1.richTextBox1.Text += split[0];
+                        form1.richTextBox1.Text += "\n";
+                        form1.richTextBox1.Text += split[1];
+                        form1.richTextBox1.Text += "\n";
+
                     });
 
                 }
