@@ -18,6 +18,8 @@ namespace ClientChatroom
         {
             InitializeComponent();
             communication = new communication(this);
+
+            
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -29,7 +31,7 @@ namespace ClientChatroom
         {
             if(MessageTextBox.Text.Length > 0)
             {
-                communication.envoyer(MessageTextBox.Text,textBox1.Text);
+                communication.envoyer(MessageTextBox.Text,PseudoBox.Text);
 
             }
 
@@ -42,32 +44,38 @@ namespace ClientChatroom
             Regex ipV4 = new Regex("^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
             if (ipV4.IsMatch(IPTextBox.Text))
             {
-                Connexion.Enabled = false;
-                bool marche = communication.conection(IPTextBox.Text,(int)numericUpDown1.Value);
+                bool marche = communication.conection(IPTextBox.Text,(int)PortNum.Value);
                 if (marche)
                 {
-                    label2.Visible = false;
+                    ErrorLabel.Visible = false;
                     MessageTextBox.Enabled = true;
                     sendButton.Enabled = true;
-                    Connexion.Enabled = false;
+                    Connexion.Visible = false;
+                    Deconnexion.Visible = true;
+                    PortNum.Enabled = false;
+                    PseudoBox.Enabled = false;
+                    IPTextBox.Enabled = false;
 
 
                
-                    label2.Visible = false;
+                    ErrorLabel.Visible = false;
                 
 
                 }
                 else
                 {
-                    Connexion.Enabled = true;
+                    Connexion.Visible = true;
+                    Deconnexion.Visible = false;
+                    IPTextBox.Enabled = true;
                 }
 
             }
             else
             {
-                label2.Text = "Adresse IP invalide";
-                label2.ForeColor = Color.Red;
-                label2.Visible = true;
+                ErrorLabel.Text = "Adresse IP invalide";
+                ErrorLabel.ForeColor = Color.Red;
+                ErrorLabel.Visible = true;
+                IPTextBox.Enabled = true;
             }
         }
 
@@ -83,7 +91,7 @@ namespace ClientChatroom
         {
             if (MessageTextBox.Text.Length > 0)
             {
-                communication.envoyer(MessageTextBox.Text, textBox1.Text);
+                communication.envoyer(MessageTextBox.Text, PseudoBox.Text);
 
             }
         }
@@ -93,8 +101,9 @@ namespace ClientChatroom
             Deconnexion.Visible = false;
             Connexion.Visible = true;
             IPTextBox.Enabled = true;
-            numericUpDown1.Enabled = true;
+            PortNum.Enabled = true;
         }
+
     }
 }
 
