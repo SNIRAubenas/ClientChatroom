@@ -16,11 +16,16 @@ namespace ClientChatroom
         TcpClient client;
         NetworkStream flux;
         private Form1 form1;
+        Thread thread;
 
 
         public communication(Form1 form1)
         {
             this.form1 = form1;
+        }
+        public void close()
+        {
+            
         }
 
         public bool conection(String text,int port)
@@ -32,7 +37,7 @@ namespace ClientChatroom
                 client = new TcpClient();
                 client.Connect(ep);
                 flux = client.GetStream();
-                Thread thread = new Thread(() => resevoire());
+                thread = new Thread(() => resevoire());
                 thread.Start();
 
             }
@@ -45,7 +50,7 @@ namespace ClientChatroom
 
         public void envoyer(String text,String pseudo)
         {
-            byte[] buffer = ASCIIEncoding.ASCII.GetBytes("0;" + pseudo + ";;;" + text);
+            byte[] buffer = ASCIIEncoding.ASCII.GetBytes(pseudo + ";" + text + "\n");
             flux.Write(buffer, 0, buffer.Length);
         }
         public void deconection()
@@ -66,7 +71,7 @@ namespace ClientChatroom
 
                     form1.Invoke((MethodInvoker)delegate
                     {
-                        ///form1.richTextBox1.Text += ;
+                        form1.richTextBox1.Text += message;
                     });
 
                 }

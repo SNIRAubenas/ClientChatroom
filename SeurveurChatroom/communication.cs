@@ -5,14 +5,15 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SeurveurChatroom
 {
-    internal class communication
+    internal class Communication
     {
         private Form1 form1;
 
-        public communication(Form1 form1)
+        public Communication(Form1 form1)
         {
             this.form1 = form1;
 
@@ -30,6 +31,12 @@ namespace SeurveurChatroom
                 Client client = new Client(tcpClient);
 
             } while (true);
+
+        }
+        public void init()
+        {
+            Thread thread = new Thread(() => conection());
+            thread.Start();
 
         }
 
