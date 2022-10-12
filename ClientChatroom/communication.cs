@@ -48,7 +48,7 @@ namespace ClientChatroom
         {
             text = text.Replace("​","");//supprime les characteres invisible qui seront utilisé comme séparateur
 
-            byte[] buffer = ASCIIEncoding.Unicode.GetBytes(text + "​" + pseudo + "​" + "1​" /*Le 1 represente le type "text"*/);
+            byte[] buffer = ASCIIEncoding.Unicode.GetBytes(text + "​" + pseudo + "​" + "1" /*Le 1 represente le type "text"*/ + "​");
             flux.Write(buffer, 0, buffer.Length);
         }
         public void deconection()

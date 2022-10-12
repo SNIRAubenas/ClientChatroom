@@ -15,14 +15,20 @@ namespace ClientChatroom
     {
         communication communication;
 
+
+        Graphics canvas;
+
+
+
         private Color drawColor;
         public Form1()
         {
             InitializeComponent();
             communication = new communication(this);
             ColorPick.SelectedIndex = 0;
-
             
+
+            //canvas = System.Windows.Forms.PaintEventArgs(Graphics);
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -169,6 +175,14 @@ namespace ClientChatroom
 
             ColorPickedLabel.BackColor = drawColor;
         }
+
+
+
+
+
+
+
+
     }
 }
 

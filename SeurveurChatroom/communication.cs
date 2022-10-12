@@ -64,6 +64,28 @@ namespace SeurveurChatroom
         }
         public void message(String message)
         {
+            String[] SplitedMessage = message.Split('​');
+            //(text + pseudo + type + couleure)
+
+            switch (SplitedMessage[2])
+            {
+                case "0":
+                    message = SplitedMessage[0] + "" + 3;
+                    break;
+                    case "1":
+                    //message client
+                    message = SplitedMessage[1] + "\n" + SplitedMessage[0] + "" + SplitedMessage[3];
+                    break;
+                case "2":
+                    //Instruction dessin
+                  break;
+
+
+
+
+            }
+
+
             Byte[] bytes = Encoding.Unicode.GetBytes(message);
 
             foreach(NetworkStream stream in networkStream)
