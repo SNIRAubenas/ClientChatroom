@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace SeurveurChatroom
 {
@@ -60,6 +61,15 @@ namespace SeurveurChatroom
         public void add(NetworkStream stream)
         {
             networkStream.Add(stream);
+        }
+        public void message(String message)
+        {
+            Byte[] bytes = Encoding.Unicode.GetBytes(message);
+
+            foreach(NetworkStream stream in networkStream)
+            {
+                stream.Write(bytes,0,bytes.Length);
+            }
         }
 
     }
