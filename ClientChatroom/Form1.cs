@@ -98,12 +98,22 @@ namespace ClientChatroom
 
         private void Disconnect_Click(object sender, EventArgs e)
         {
+
+            communication.deconection();
+
             Deconnexion.Visible = false;
             Connexion.Visible = true;
             IPTextBox.Enabled = true;
             PortNum.Enabled = true;
         }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            communication.deconection();
+            e.Cancel = false;
+            
+
+        }
     }
 }
 

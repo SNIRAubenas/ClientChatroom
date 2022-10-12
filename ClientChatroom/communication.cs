@@ -16,17 +16,14 @@ namespace ClientChatroom
         TcpClient client;
         NetworkStream flux;
         private Form1 form1;
-        Thread thread;
+        private Thread thread;
 
 
         public communication(Form1 form1)
         {
             this.form1 = form1;
         }
-        public void close()
-        {
-            
-        }
+      
 
         public bool conection(String text,int port)
         {
@@ -55,7 +52,11 @@ namespace ClientChatroom
         }
         public void deconection()
         {
-            flux.Close();
+            if (thread != null)
+            {
+                if (thread.IsAlive)
+                    flux.Close();
+            }
         }
         public void resevoire()
         {
