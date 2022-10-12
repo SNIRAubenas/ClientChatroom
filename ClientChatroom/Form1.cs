@@ -14,10 +14,13 @@ namespace ClientChatroom
     public partial class Form1 : Form
     {
         communication communication;
+
+        private Color drawColor;
         public Form1()
         {
             InitializeComponent();
             communication = new communication(this);
+            ColorPick.SelectedIndex = 0;
 
             
         }
@@ -113,6 +116,58 @@ namespace ClientChatroom
             e.Cancel = false;
             
 
+        }
+
+        private void ColorPick_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (ColorPick.SelectedIndex)
+            {
+                case 0:
+                    drawColor = Color.FromArgb(0, 0, 0);//Black
+                    break;
+                case 1:
+                    drawColor = Color.FromArgb(255, 255, 255);//White
+                    break;
+                case 2:
+                    drawColor = Color.FromArgb(255, 0, 0);//Red
+                    break;
+                case 3:
+                    drawColor = Color.FromArgb(255, 128, 0);//Orange
+                    break;
+                case 4:
+                    drawColor = Color.FromArgb(255, 255, 0);//Yellow
+                    break;
+                case 5:
+                    drawColor = Color.FromArgb(128, 255, 0);//Jungle
+                    break;
+                case 6:
+                    drawColor = Color.FromArgb(0, 255, 0);//Green
+                    break;
+                case 7:
+                    drawColor = Color.FromArgb(0, 255, 128);//Teal
+                    break;
+                case 8:
+                    drawColor = Color.FromArgb(0, 255, 255);//Cyan
+                    break;
+                case 9:
+                    drawColor = Color.FromArgb(0, 128, 255);//Sky
+                    break;
+                case 10:
+                    drawColor = Color.FromArgb(0, 0, 255);//Blue
+                    break;
+                case 11:
+                    drawColor = Color.FromArgb(128, 0, 255);//Purple
+                    break;
+                case 12:
+                    drawColor = Color.FromArgb(255, 0, 255);//Magenta
+                    break;
+                case 13:
+                    drawColor = Color.FromArgb(255, 0, 128);//Fushia
+                    break;
+
+            }//fin du switch
+
+            ColorPickedLabel.BackColor = drawColor;
         }
     }
 }
