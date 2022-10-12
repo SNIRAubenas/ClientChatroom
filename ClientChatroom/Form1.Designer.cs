@@ -32,21 +32,21 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.IPTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.ErrorLabel = new System.Windows.Forms.Label();
             this.MessageTextBox = new System.Windows.Forms.TextBox();
             this.sendButton = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.IpLabel = new System.Windows.Forms.Label();
+            this.PortNum = new System.Windows.Forms.NumericUpDown();
+            this.PortLabel = new System.Windows.Forms.Label();
+            this.PseudoLabel = new System.Windows.Forms.Label();
+            this.PseudoBox = new System.Windows.Forms.TextBox();
             this.Canvas = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.Deconnexion = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PortNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,15 +86,15 @@
             this.IPTextBox.TabIndex = 2;
             this.IPTextBox.Text = "127.0.0.1";
             // 
-            // label2
+            // ErrorLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(60, 428);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "label2";
-            this.label2.Visible = false;
+            this.ErrorLabel.AutoSize = true;
+            this.ErrorLabel.Location = new System.Drawing.Point(60, 428);
+            this.ErrorLabel.Name = "ErrorLabel";
+            this.ErrorLabel.Size = new System.Drawing.Size(35, 13);
+            this.ErrorLabel.TabIndex = 4;
+            this.ErrorLabel.Text = "label2";
+            this.ErrorLabel.Visible = false;
             // 
             // MessageTextBox
             // 
@@ -119,62 +119,62 @@
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
-            // label1
+            // IpLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 395);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(17, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "IP";
+            this.IpLabel.AutoSize = true;
+            this.IpLabel.Location = new System.Drawing.Point(12, 395);
+            this.IpLabel.Name = "IpLabel";
+            this.IpLabel.Size = new System.Drawing.Size(17, 13);
+            this.IpLabel.TabIndex = 7;
+            this.IpLabel.Text = "IP";
             // 
-            // numericUpDown1
+            // PortNum
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(212, 392);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.PortNum.Location = new System.Drawing.Point(212, 392);
+            this.PortNum.Maximum = new decimal(new int[] {
             65000,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.PortNum.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(46, 20);
-            this.numericUpDown1.TabIndex = 8;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.PortNum.Name = "PortNum";
+            this.PortNum.Size = new System.Drawing.Size(46, 20);
+            this.PortNum.TabIndex = 8;
+            this.PortNum.Value = new decimal(new int[] {
             18,
             0,
             0,
             0});
             // 
-            // label3
+            // PortLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(176, 395);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(26, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Port";
+            this.PortLabel.AutoSize = true;
+            this.PortLabel.Location = new System.Drawing.Point(176, 395);
+            this.PortLabel.Name = "PortLabel";
+            this.PortLabel.Size = new System.Drawing.Size(26, 13);
+            this.PortLabel.TabIndex = 9;
+            this.PortLabel.Text = "Port";
             // 
-            // label4
+            // PseudoLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(22, 352);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(62, 13);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Pseudonym";
+            this.PseudoLabel.AutoSize = true;
+            this.PseudoLabel.Location = new System.Drawing.Point(22, 352);
+            this.PseudoLabel.Name = "PseudoLabel";
+            this.PseudoLabel.Size = new System.Drawing.Size(62, 13);
+            this.PseudoLabel.TabIndex = 10;
+            this.PseudoLabel.Text = "Pseudonym";
             // 
-            // textBox1
+            // PseudoBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(107, 352);
-            this.textBox1.MaxLength = 21;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(246, 20);
-            this.textBox1.TabIndex = 11;
+            this.PseudoBox.Location = new System.Drawing.Point(107, 352);
+            this.PseudoBox.MaxLength = 21;
+            this.PseudoBox.Name = "PseudoBox";
+            this.PseudoBox.Size = new System.Drawing.Size(246, 20);
+            this.PseudoBox.TabIndex = 11;
             // 
             // Canvas
             // 
@@ -224,14 +224,14 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Canvas);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.PseudoBox);
+            this.Controls.Add(this.PseudoLabel);
+            this.Controls.Add(this.PortLabel);
+            this.Controls.Add(this.PortNum);
+            this.Controls.Add(this.IpLabel);
             this.Controls.Add(this.sendButton);
             this.Controls.Add(this.MessageTextBox);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.ErrorLabel);
             this.Controls.Add(this.IPTextBox);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Connexion);
@@ -240,7 +240,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PortNum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -252,15 +252,15 @@
         private System.Windows.Forms.Button Connexion;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox IPTextBox;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label ErrorLabel;
         private System.Windows.Forms.TextBox MessageTextBox;
         private System.Windows.Forms.Button sendButton;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label IpLabel;
+        private System.Windows.Forms.NumericUpDown PortNum;
+        private System.Windows.Forms.Label PortLabel;
+        private System.Windows.Forms.Label PseudoLabel;
+        private System.Windows.Forms.TextBox PseudoBox;
         private System.Windows.Forms.PictureBox Canvas;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;

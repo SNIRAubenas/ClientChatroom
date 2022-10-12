@@ -23,7 +23,7 @@ namespace SeurveurChatroom
         {
             try
             {
-                if (workin)
+                if (!workin)
                 {
                     OnOff.BackColor = Color.Orange;
                     //Lance le serv
@@ -31,10 +31,14 @@ namespace SeurveurChatroom
                     OnOff.BackColor = Color.Green;
                     return;
                 }
+                else
+                {
+                    //Eteint le serv
+                }
             }
             catch
             {
-
+            
             }
 
             button.Text = "ON";
