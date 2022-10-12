@@ -37,7 +37,7 @@ namespace SeurveurChatroom
                 else
                 {
                     workin = false;
-                    //communication.
+                    communication.deconexion();
                 }
             }
             catch
@@ -47,6 +47,11 @@ namespace SeurveurChatroom
 
             button.Text = "ON";
             OnOff.BackColor = Color.Red;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            communication.deconexion();
         }
     }
 }

@@ -10,14 +10,25 @@ namespace SeurveurChatroom
 {
     internal class Client
     {
-        public Client(TcpClient tcpClient)
+        Communication Communication;
+        NetworkStream stream;
+        TcpClient tcpClient;
+
+        public Client(TcpClient tcpClient,Communication communication)
         {
-            Thread thread = new Thread(() => run(tcpClient));
+            Communication = communication;
+            this.tcpClient = tcpClient;
+
+            stream = tcpClient.GetStream();
+            communication.add(stream);
+
+            ThreadStart ts = new ThreadStart(run);
+            Thread thread = new Thread(ts);
             thread.Start();
         }
-        public void run(TcpClient tcpClient)
+        public void run()
         {
-            NetworkStream stream = tcpClient.GetStream();
+
             byte[] buffer = new byte[1024];
             do
             {

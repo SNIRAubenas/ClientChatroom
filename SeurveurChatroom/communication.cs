@@ -12,24 +12,32 @@ namespace SeurveurChatroom
     internal class Communication
     {
         private Form1 form1;
-        ///private List<>
+        private List<NetworkStream> networkStream;
+        private TcpListener listener;
 
         public Communication(Form1 form1)
         {
             this.form1 = form1;
-
+            networkStream = new List<NetworkStream>();
         }
         public void conection()
         {
             IPAddress iPAddress = IPAddress.Parse("127.0.0.1");
             int port = 18;
-            TcpListener listener = new TcpListener(iPAddress, port);
+            listener = new TcpListener(iPAddress, port);
             listener.Start();
             do
             {
+                try
+                {
+                    TcpClient tcpClient = listener.AcceptTcpClient();
+                    Client client = new Client(tcpClient,this);
 
-                TcpClient tcpClient = listener.AcceptTcpClient();
-                Client client = new Client(tcpClient);
+                }
+                catch
+                {
+                    break;
+                }
 
             } while (true);
 
@@ -43,7 +51,15 @@ namespace SeurveurChatroom
         }
         public void deconexion()
         {
-
+            foreach (NetworkStream stream in networkStream)
+            {
+                stream.Close();
+            }
+            listener.Stop();
+        }
+        public void add(NetworkStream stream)
+        {
+            networkStream.Add(stream);
         }
 
     }
