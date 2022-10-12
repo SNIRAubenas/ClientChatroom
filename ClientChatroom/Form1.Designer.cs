@@ -35,7 +35,6 @@
             this.ErrorLabel = new System.Windows.Forms.Label();
             this.MessageTextBox = new System.Windows.Forms.TextBox();
             this.sendButton = new System.Windows.Forms.Button();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.IpLabel = new System.Windows.Forms.Label();
             this.PortNum = new System.Windows.Forms.NumericUpDown();
             this.PortLabel = new System.Windows.Forms.Label();
@@ -47,9 +46,12 @@
             this.Deconnexion = new System.Windows.Forms.Button();
             this.ColorPick = new System.Windows.Forms.ComboBox();
             this.ColorPickedLabel = new System.Windows.Forms.Label();
+            this.PxUpDown = new System.Windows.Forms.NumericUpDown();
+            this.labelDebug = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PortNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PxUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // Connexion
@@ -105,7 +107,6 @@
             this.MessageTextBox.Name = "MessageTextBox";
             this.MessageTextBox.Size = new System.Drawing.Size(242, 20);
             this.MessageTextBox.TabIndex = 5;
-            this.MessageTextBox.Validated += new System.EventHandler(this.MessageTextBox_Validated);
             // 
             // sendButton
             // 
@@ -116,10 +117,6 @@
             this.sendButton.Text = "Envoyer";
             this.sendButton.UseVisualStyleBackColor = true;
             this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
-            // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
             // IpLabel
             // 
@@ -187,15 +184,20 @@
             this.Canvas.TabIndex = 12;
             this.Canvas.TabStop = false;
             this.Canvas.Click += new System.EventHandler(this.Canvas_Click);
+            this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseDown);
+            this.Canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseMove);
+            this.Canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseUp);
             // 
             // RoundBrush
             // 
+            this.RoundBrush.Enabled = false;
             this.RoundBrush.Location = new System.Drawing.Point(246, 16);
             this.RoundBrush.Name = "RoundBrush";
             this.RoundBrush.Size = new System.Drawing.Size(40, 40);
             this.RoundBrush.TabIndex = 13;
             this.RoundBrush.Text = "○";
             this.RoundBrush.UseVisualStyleBackColor = true;
+            this.RoundBrush.Click += new System.EventHandler(this.RoundBrush_Click);
             // 
             // SquareBrush
             // 
@@ -205,6 +207,7 @@
             this.SquareBrush.TabIndex = 14;
             this.SquareBrush.Text = "▬";
             this.SquareBrush.UseVisualStyleBackColor = true;
+            this.SquareBrush.Click += new System.EventHandler(this.SquareBrush_Click);
             // 
             // Deconnexion
             // 
@@ -236,7 +239,10 @@
             "Blue",
             "Purple",
             "Magenta",
-            "Fushia"});
+            "Fushia",
+            "Gray",
+            "DarkGray",
+            "RaInBoW"});
             this.ColorPick.Location = new System.Drawing.Point(246, 62);
             this.ColorPick.Name = "ColorPick";
             this.ColorPick.Size = new System.Drawing.Size(86, 21);
@@ -248,17 +254,50 @@
             this.ColorPickedLabel.AutoSize = true;
             this.ColorPickedLabel.BackColor = System.Drawing.Color.White;
             this.ColorPickedLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ColorPickedLabel.Location = new System.Drawing.Point(350, 42);
+            this.ColorPickedLabel.Location = new System.Drawing.Point(350, 62);
             this.ColorPickedLabel.Name = "ColorPickedLabel";
             this.ColorPickedLabel.Size = new System.Drawing.Size(18, 15);
             this.ColorPickedLabel.TabIndex = 17;
             this.ColorPickedLabel.Text = "   ";
+            // 
+            // PxUpDown
+            // 
+            this.PxUpDown.Location = new System.Drawing.Point(338, 28);
+            this.PxUpDown.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.PxUpDown.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.PxUpDown.Name = "PxUpDown";
+            this.PxUpDown.Size = new System.Drawing.Size(44, 20);
+            this.PxUpDown.TabIndex = 18;
+            this.PxUpDown.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            // 
+            // labelDebug
+            // 
+            this.labelDebug.AutoSize = true;
+            this.labelDebug.Location = new System.Drawing.Point(246, 127);
+            this.labelDebug.Name = "labelDebug";
+            this.labelDebug.Size = new System.Drawing.Size(29, 13);
+            this.labelDebug.TabIndex = 19;
+            this.labelDebug.Text = "false";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 461);
+            this.Controls.Add(this.labelDebug);
+            this.Controls.Add(this.PxUpDown);
             this.Controls.Add(this.ColorPickedLabel);
             this.Controls.Add(this.ColorPick);
             this.Controls.Add(this.Deconnexion);
@@ -284,6 +323,7 @@
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PortNum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PxUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -297,7 +337,6 @@
         private System.Windows.Forms.Label ErrorLabel;
         private System.Windows.Forms.TextBox MessageTextBox;
         private System.Windows.Forms.Button sendButton;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label IpLabel;
         private System.Windows.Forms.NumericUpDown PortNum;
         private System.Windows.Forms.Label PortLabel;
@@ -310,6 +349,8 @@
         private System.Windows.Forms.Button Deconnexion;
         private System.Windows.Forms.ComboBox ColorPick;
         private System.Windows.Forms.Label ColorPickedLabel;
+        private System.Windows.Forms.NumericUpDown PxUpDown;
+        private System.Windows.Forms.Label labelDebug;
     }
 }
 

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,6 +19,8 @@ namespace ClientChatroom
 
         Graphics canvas;
 
+        bool roundPen = true, mousePressed = false;
+
 
 
         private Color drawColor;
@@ -26,14 +29,9 @@ namespace ClientChatroom
             InitializeComponent();
             communication = new communication(this);
             ColorPick.SelectedIndex = 0;
-            
 
-            //canvas = System.Windows.Forms.PaintEventArgs(Graphics);
-        }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-
+            canvas = Canvas.CreateGraphics();
+           
         }
 
         private void sendButton_Click(object sender, EventArgs e)
@@ -68,6 +66,7 @@ namespace ClientChatroom
 
                
                     ErrorLabel.Visible = false;
+                    //Canvas.Enabled = true;
                 
 
                 }
@@ -91,19 +90,14 @@ namespace ClientChatroom
 
         private void Canvas_Click(object sender, EventArgs e)
         {
-       
+            MouseEventArgs mea = (MouseEventArgs) e;
+            Point pos = mea.Location;
+
+            
 
 
         }
 
-        private void MessageTextBox_Validated(object sender, EventArgs e)
-        {
-            if (MessageTextBox.Text.Length > 0)
-            {
-                communication.envoyer(MessageTextBox.Text, PseudoBox.Text);
-
-            }
-        }
 
         private void Disconnect_Click(object sender, EventArgs e)
         {
@@ -114,6 +108,7 @@ namespace ClientChatroom
             Connexion.Visible = true;
             IPTextBox.Enabled = true;
             PortNum.Enabled = true;
+            //Canvas.Enabled = false;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -123,65 +118,124 @@ namespace ClientChatroom
             
 
         }
-
-        private void ColorPick_SelectedIndexChanged(object sender, EventArgs e)
+        private Color ColorSetter(int colorIdx)
         {
-            switch (ColorPick.SelectedIndex)
+            
+
+            switch (colorIdx)
             {
                 case 0:
-                    drawColor = Color.FromArgb(0, 0, 0);//Black
-                    break;
+                    return Color.FromArgb(0, 0, 0);//Black
+                    
                 case 1:
-                    drawColor = Color.FromArgb(255, 255, 255);//White
-                    break;
+                    return Color.FromArgb(255, 255, 255);//White
                 case 2:
-                    drawColor = Color.FromArgb(255, 0, 0);//Red
-                    break;
+                    return Color.FromArgb(255, 0, 0);//Red
                 case 3:
-                    drawColor = Color.FromArgb(255, 128, 0);//Orange
-                    break;
+                    return Color.FromArgb(255, 128, 0);//Orange
                 case 4:
-                    drawColor = Color.FromArgb(255, 255, 0);//Yellow
-                    break;
+                    return Color.FromArgb(255, 255, 0);//Yellow
                 case 5:
-                    drawColor = Color.FromArgb(128, 255, 0);//Jungle
-                    break;
+                    return Color.FromArgb(128, 255, 0);//Jungle
                 case 6:
-                    drawColor = Color.FromArgb(0, 255, 0);//Green
-                    break;
+                    return Color.FromArgb(0, 255, 0);//Green
                 case 7:
-                    drawColor = Color.FromArgb(0, 255, 128);//Teal
-                    break;
+                    return Color.FromArgb(0, 255, 128);//Teal
                 case 8:
-                    drawColor = Color.FromArgb(0, 255, 255);//Cyan
-                    break;
+                    return Color.FromArgb(0, 255, 255);//Cyan
                 case 9:
-                    drawColor = Color.FromArgb(0, 128, 255);//Sky
-                    break;
+                    return Color.FromArgb(0, 128, 255);//Sky
                 case 10:
-                    drawColor = Color.FromArgb(0, 0, 255);//Blue
-                    break;
+                    return Color.FromArgb(0, 0, 255);//Blue
                 case 11:
-                    drawColor = Color.FromArgb(128, 0, 255);//Purple
-                    break;
+                    return Color.FromArgb(128, 0, 255);//Purple
                 case 12:
-                    drawColor = Color.FromArgb(255, 0, 255);//Magenta
-                    break;
+                    return Color.FromArgb(255, 0, 255);//Magenta
                 case 13:
-                    drawColor = Color.FromArgb(255, 0, 128);//Fushia
-                    break;
+                    return Color.FromArgb(255, 0, 128);//Fushia
+                case 14:
+                    return Color.FromArgb(128, 128, 128);//Gray
+                case 15:
+                    return Color.FromArgb(64, 64, 64);//DarkGray
+                default:
+                    Random rd = new Random();
+                    return Color.FromArgb(rd.Next(256), rd.Next(256), rd.Next(256));
 
-            }//fin du switch
-
+            }
+        }
+        private void ColorPick_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //fin du switch
+            drawColor = ColorSetter(ColorPick.SelectedIndex);
             ColorPickedLabel.BackColor = drawColor;
         }
 
+        private void RoundBrush_Click(object sender, EventArgs e)
+        {
+            RoundBrush.Enabled = false;
+            SquareBrush.Enabled = true;
+            roundPen = true;
+        }
+
+        private void SquareBrush_Click(object sender, EventArgs e)
+        {
+            SquareBrush.Enabled = false;
+            RoundBrush.Enabled = true;
+            roundPen = false;
+        }
+
+        private void Canvas_MouseDown(object sender, MouseEventArgs e)
+        {
+            mousePressed = true;
+            
+
+        }
+
+        private void Canvas_MouseMove(object sender, MouseEventArgs mousePos)
+        {
+
+            
+            {
+                if (mousePressed)
+                {
+                    byte px = (byte)PxUpDown.Value;
+
+                    Brush brush = new SolidBrush(drawColor);
+                    Point pos = new Point();
+                    pos.X = (mousePos.X - (px >> 1)) + 1;
+                    pos.Y = (mousePos.Y - (px >> 1)) + 1;
+                
+                    if (roundPen)
+                    {
+                        //communication.envoyer("C", px, pos,drawColor);
+                        canvas.FillEllipse(brush, pos.X, pos.Y, px, px);
+
+                    }
+                    else
+                    {
+                        canvas.FillRectangle(brush, pos.X, pos.Y, px, px);
+                        //communication.envoyer("S",px,pos,drawColor);
+                    }
 
 
 
+                
+                }
+            }
+            
+        }
 
+        private void Canvas_MouseUp(object sender, MouseEventArgs e)
+        {
+            mousePressed = false;
+            
+        }
 
+        
+            
+            
 
+        
 
     }
 }

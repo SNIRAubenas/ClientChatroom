@@ -12,7 +12,7 @@ namespace SeurveurChatroom
 {
     internal class Communication
     {
-        private Form1 form1;
+        public Form1 form1;
         private List<NetworkStream> networkStream;
         private TcpListener listener;
 
@@ -56,15 +56,18 @@ namespace SeurveurChatroom
             {
                 stream.Close();
             }
-            listener.Stop();
+            try
+            {
+                listener.Stop();
+            }
+            catch { }
         }
         public void add(NetworkStream stream)
         {
             networkStream.Add(stream);
         }
-        public void message(String message)
+        public void message(Byte[] bytes)
         {
-            Byte[] bytes = Encoding.Unicode.GetBytes(message);
 
             foreach(NetworkStream stream in networkStream)
             {
