@@ -46,6 +46,7 @@
             this.SquareBrush = new System.Windows.Forms.Button();
             this.Deconnexion = new System.Windows.Forms.Button();
             this.ColorPick = new System.Windows.Forms.ComboBox();
+            this.ColorPickedLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PortNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
@@ -240,12 +241,25 @@
             this.ColorPick.Name = "ColorPick";
             this.ColorPick.Size = new System.Drawing.Size(86, 21);
             this.ColorPick.TabIndex = 16;
+            this.ColorPick.SelectedIndexChanged += new System.EventHandler(this.ColorPick_SelectedIndexChanged);
+            // 
+            // ColorPickedLabel
+            // 
+            this.ColorPickedLabel.AutoSize = true;
+            this.ColorPickedLabel.BackColor = System.Drawing.Color.White;
+            this.ColorPickedLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ColorPickedLabel.Location = new System.Drawing.Point(350, 42);
+            this.ColorPickedLabel.Name = "ColorPickedLabel";
+            this.ColorPickedLabel.Size = new System.Drawing.Size(18, 15);
+            this.ColorPickedLabel.TabIndex = 17;
+            this.ColorPickedLabel.Text = "   ";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 461);
+            this.Controls.Add(this.ColorPickedLabel);
             this.Controls.Add(this.ColorPick);
             this.Controls.Add(this.Deconnexion);
             this.Controls.Add(this.SquareBrush);
@@ -295,6 +309,7 @@
         public System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button Deconnexion;
         private System.Windows.Forms.ComboBox ColorPick;
+        private System.Windows.Forms.Label ColorPickedLabel;
     }
 }
 
