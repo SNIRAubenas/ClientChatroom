@@ -42,9 +42,10 @@
             this.PseudoLabel = new System.Windows.Forms.Label();
             this.PseudoBox = new System.Windows.Forms.TextBox();
             this.Canvas = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.RoundBrush = new System.Windows.Forms.Button();
+            this.SquareBrush = new System.Windows.Forms.Button();
             this.Deconnexion = new System.Windows.Forms.Button();
+            this.ColorPick = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PortNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
@@ -186,23 +187,23 @@
             this.Canvas.TabStop = false;
             this.Canvas.Click += new System.EventHandler(this.Canvas_Click);
             // 
-            // button1
+            // RoundBrush
             // 
-            this.button1.Location = new System.Drawing.Point(246, 16);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(40, 40);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "○";
-            this.button1.UseVisualStyleBackColor = true;
+            this.RoundBrush.Location = new System.Drawing.Point(246, 16);
+            this.RoundBrush.Name = "RoundBrush";
+            this.RoundBrush.Size = new System.Drawing.Size(40, 40);
+            this.RoundBrush.TabIndex = 13;
+            this.RoundBrush.Text = "○";
+            this.RoundBrush.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // SquareBrush
             // 
-            this.button2.Location = new System.Drawing.Point(292, 16);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(40, 40);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "▬";
-            this.button2.UseVisualStyleBackColor = true;
+            this.SquareBrush.Location = new System.Drawing.Point(292, 16);
+            this.SquareBrush.Name = "SquareBrush";
+            this.SquareBrush.Size = new System.Drawing.Size(40, 40);
+            this.SquareBrush.TabIndex = 14;
+            this.SquareBrush.Text = "▬";
+            this.SquareBrush.UseVisualStyleBackColor = true;
             // 
             // Deconnexion
             // 
@@ -215,14 +216,38 @@
             this.Deconnexion.Visible = false;
             this.Deconnexion.Click += new System.EventHandler(this.Disconnect_Click);
             // 
+            // ColorPick
+            // 
+            this.ColorPick.FormattingEnabled = true;
+            this.ColorPick.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.ColorPick.ItemHeight = 13;
+            this.ColorPick.Items.AddRange(new object[] {
+            "Red",
+            "Orange",
+            "Yellow",
+            "Jungle",
+            "Green",
+            "Teal",
+            "Cyan",
+            "Sky",
+            "Blue",
+            "Purple",
+            "Magenta",
+            "Fushia"});
+            this.ColorPick.Location = new System.Drawing.Point(338, 27);
+            this.ColorPick.Name = "ColorPick";
+            this.ColorPick.Size = new System.Drawing.Size(40, 21);
+            this.ColorPick.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 461);
+            this.Controls.Add(this.ColorPick);
             this.Controls.Add(this.Deconnexion);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.SquareBrush);
+            this.Controls.Add(this.RoundBrush);
             this.Controls.Add(this.Canvas);
             this.Controls.Add(this.PseudoBox);
             this.Controls.Add(this.PseudoLabel);
@@ -239,6 +264,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PortNum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
@@ -262,10 +288,11 @@
         private System.Windows.Forms.Label PseudoLabel;
         private System.Windows.Forms.TextBox PseudoBox;
         private System.Windows.Forms.PictureBox Canvas;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button RoundBrush;
+        private System.Windows.Forms.Button SquareBrush;
         public System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button Deconnexion;
+        private System.Windows.Forms.ComboBox ColorPick;
     }
 }
 
