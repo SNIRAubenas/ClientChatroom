@@ -68,9 +68,9 @@ namespace ClientChatroom
                     byte[] buffer = new byte[1024];
                     flux.Read(buffer, 0, buffer.Length);
                     String message = ASCIIEncoding.Unicode.GetString(buffer);
-                    String[] strings;
+                    ;
 
-                    strings = message.Split('​');
+                    String[] split = message.Split('​');
 
                     form1.Invoke((MethodInvoker)delegate
                     {

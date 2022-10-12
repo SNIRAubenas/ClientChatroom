@@ -12,6 +12,7 @@ namespace SeurveurChatroom
     internal class Communication
     {
         private Form1 form1;
+        ///private List<>
 
         public Communication(Form1 form1)
         {
@@ -37,6 +38,11 @@ namespace SeurveurChatroom
         {
             Thread thread = new Thread(() => conection());
             thread.Start();
+            
+
+        }
+        public void deconexion()
+        {
 
         }
 
