@@ -47,7 +47,9 @@ namespace ClientChatroom
 
         public void envoyer(String text,String pseudo)
         {
-            byte[] buffer = ASCIIEncoding.ASCII.GetBytes(pseudo + ";" + text + "\n");
+            text = text.Replace("​","");//supprime les characteres invisible qui seront utilisé comme séparateur
+
+            byte[] buffer = ASCIIEncoding.Unicode.GetBytes(text + "​" + pseudo + "​" + "1​" /*Le 1 represente le type "text"*/);
             flux.Write(buffer, 0, buffer.Length);
         }
         public void deconection()
@@ -66,9 +68,10 @@ namespace ClientChatroom
                 {
                     byte[] buffer = new byte[1024];
                     flux.Read(buffer, 0, buffer.Length);
-                    String message = ASCIIEncoding.ASCII.GetString(buffer);
-                    List<String> strings = new List<String>();
-                    //strings = message.Split(";");
+                    String message = ASCIIEncoding.Unicode.GetString(buffer);
+                    String[] strings;
+
+                    strings = message.Split('​');
 
                     form1.Invoke((MethodInvoker)delegate
                     {

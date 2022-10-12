@@ -30,7 +30,7 @@ namespace SeurveurChatroom
 
                         break;
                     }
-                    string message = ASCIIEncoding.ASCII.GetString(buffer, 0, lu);
+                    string message = ASCIIEncoding.Unicode.GetString(buffer, 0, lu);
                     Console.WriteLine(message);
                     stream.Write(buffer, 0, lu);
 
