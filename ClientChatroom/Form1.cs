@@ -51,11 +51,17 @@ namespace ClientChatroom
                     sendButton.Enabled = true;
                     Connexion.Enabled = false;
 
+
+               
+                    label2.Visible = false;
+                
+
                 }
                 else
                 {
                     Connexion.Enabled = true;
                 }
+
             }
             else
             {

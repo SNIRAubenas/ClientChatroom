@@ -16,5 +16,29 @@ namespace SeurveurChatroom
         {
             InitializeComponent();
         }
+
+        bool workin = false;
+
+        private void button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (workin)
+                {
+                    OnOff.BackColor = Color.Orange;
+                    //Lance le serv
+                    button.Text = "OFF";
+                    OnOff.BackColor = Color.Green;
+                    return;
+                }
+            }
+            catch
+            {
+
+            }
+
+            button.Text = "ON";
+            OnOff.BackColor = Color.Red;
+        }
     }
 }
