@@ -222,6 +222,8 @@
             this.ColorPick.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.ColorPick.ItemHeight = 13;
             this.ColorPick.Items.AddRange(new object[] {
+            "Black",
+            "White",
             "Red",
             "Orange",
             "Yellow",
@@ -234,9 +236,9 @@
             "Purple",
             "Magenta",
             "Fushia"});
-            this.ColorPick.Location = new System.Drawing.Point(338, 27);
+            this.ColorPick.Location = new System.Drawing.Point(246, 62);
             this.ColorPick.Name = "ColorPick";
-            this.ColorPick.Size = new System.Drawing.Size(40, 21);
+            this.ColorPick.Size = new System.Drawing.Size(86, 21);
             this.ColorPick.TabIndex = 16;
             // 
             // Form1
