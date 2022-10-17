@@ -36,6 +36,8 @@ namespace ClientChatroom
                 flux = client.GetStream();
                 thread = new Thread(() => resevoire());
                 thread.Start();
+                form1.richTextBox1.Text += "ThreadStarted\n";
+                if ( flux.CanWrite) form1.richTextBox1.Text += "devrais Marcher\n";
 
             }
             catch
@@ -57,7 +59,12 @@ namespace ClientChatroom
             if (thread != null)
             {
                 if (thread.IsAlive)
+                {
                     flux.Close();
+                    form1.richTextBox1.Text += "Flux closed\n";
+
+                }
+                   
             }
         }
         /*
@@ -102,7 +109,7 @@ namespace ClientChatroom
                 }
 
             }while(true);
-            deconection();
+            //deconection();
         }
     }
 }

@@ -211,6 +211,7 @@
             // 
             // Deconnexion
             // 
+            this.Deconnexion.Enabled = false;
             this.Deconnexion.Location = new System.Drawing.Point(278, 390);
             this.Deconnexion.Name = "Deconnexion";
             this.Deconnexion.Size = new System.Drawing.Size(75, 23);

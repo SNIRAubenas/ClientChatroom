@@ -59,6 +59,7 @@ namespace ClientChatroom
                     sendButton.Enabled = true;
                     Connexion.Visible = false;
                     Deconnexion.Visible = true;
+                    Deconnexion.Enabled = true;
                     PortNum.Enabled = false;
                     PseudoBox.Enabled = false;
                     IPTextBox.Enabled = false;
@@ -74,6 +75,7 @@ namespace ClientChatroom
                 {
                     Connexion.Visible = true;
                     Deconnexion.Visible = false;
+                    Deconnexion.Enabled = false;
                     IPTextBox.Enabled = true;
                 }
 
@@ -105,6 +107,7 @@ namespace ClientChatroom
             communication.deconection();
 
             Deconnexion.Visible = false;
+            Deconnexion.Enabled = false;
             Connexion.Visible = true;
             IPTextBox.Enabled = true;
             PortNum.Enabled = true;

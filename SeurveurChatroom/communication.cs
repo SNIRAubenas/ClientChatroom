@@ -12,7 +12,7 @@ namespace SeurveurChatroom
 {
     internal class Communication
     {
-        private Form1 form1;
+        public Form1 form1;
         private List<NetworkStream> networkStream;
         private TcpListener listener;
 
@@ -56,37 +56,18 @@ namespace SeurveurChatroom
             {
                 stream.Close();
             }
-            listener.Stop();
+            try
+            {
+                listener.Stop();
+            }
+            catch { }
         }
         public void add(NetworkStream stream)
         {
             networkStream.Add(stream);
         }
-        public void message(String message)
+        public void message(Byte[] bytes)
         {
-            String[] SplitedMessage = message.Split('​');
-            //(text + pseudo + type + couleure)
-
-            switch (SplitedMessage[2])
-            {
-                case "0":
-                    message = SplitedMessage[0] + "" + 3;
-                    break;
-                    case "1":
-                    //message client
-                    message = SplitedMessage[1] + "\n" + SplitedMessage[0] + "" + SplitedMessage[3];
-                    break;
-                case "2":
-                    //Instruction dessin
-                  break;
-
-
-
-
-            }
-
-
-            Byte[] bytes = Encoding.Unicode.GetBytes(message);
 
             foreach(NetworkStream stream in networkStream)
             {
