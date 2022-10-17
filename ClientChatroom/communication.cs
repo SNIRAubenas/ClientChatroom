@@ -78,7 +78,7 @@ namespace ClientChatroom
                 try
                 {
                     byte[] buffer = new byte[1024];
-                    flux.Position = 0;
+                    //flux.Position = 0;
                     flux.Read(buffer, 0, buffer.Length);
                     String message = UnicodeEncoding.Unicode.GetString(buffer);
 
