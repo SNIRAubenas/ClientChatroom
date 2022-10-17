@@ -17,7 +17,8 @@ namespace ClientChatroom
         communication communication;
 
 
-        Graphics canvas;
+        public Graphics canvas;
+        public String pseudonym;
 
         bool roundPen = true, mousePressed = false;
 
@@ -64,7 +65,7 @@ namespace ClientChatroom
                     PseudoBox.Enabled = false;
                     IPTextBox.Enabled = false;
 
-
+                    this.pseudonym = PseudoBox.Text;
                
                     ErrorLabel.Visible = false;
                     //Canvas.Enabled = true;
@@ -210,14 +211,14 @@ namespace ClientChatroom
                 
                     if (roundPen)
                     {
-                        //communication.envoyer("C", px, pos,drawColor);
-                        canvas.FillEllipse(brush, pos.X, pos.Y, px, px);
+                        communication.envoyer("C", px, pos,drawColor);
+                        //canvas.FillEllipse(brush, pos.X, pos.Y, px, px);
 
                     }
                     else
                     {
-                        canvas.FillRectangle(brush, pos.X, pos.Y, px, px);
-                        //communication.envoyer("S",px,pos,drawColor);
+                        //canvas.FillRectangle(brush, pos.X, pos.Y, px, px);
+                        communication.envoyer("S",px,pos,drawColor);
                     }
 
 
