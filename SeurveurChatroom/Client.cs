@@ -42,7 +42,7 @@ namespace SeurveurChatroom
                         break;
                     }
                     string message = UnicodeEncoding.Unicode.GetString(buffer, 0, lu);
-                    this.Communication.form1.SetDebugTxt(message);
+
                     this.Communication.message(buffer);
                 }
                 catch
