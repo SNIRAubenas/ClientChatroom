@@ -16,7 +16,7 @@ namespace SeurveurChatroom
 
         public Client(TcpClient tcpClient,Communication communication)
         {
-            Communication = communication;
+            this.Communication = communication;
             this.tcpClient = tcpClient;
 
             stream = tcpClient.GetStream();
@@ -34,15 +34,16 @@ namespace SeurveurChatroom
             {
                 try
                 {
-
+                    
                     int lu = stream.Read(buffer, 0, buffer.Length);
                     if (lu == 0)
                     {
 
                         break;
                     }
-                    string message = ASCIIEncoding.Unicode.GetString(buffer, 0, lu);
-                    Communication.message(message);
+                    string message = UnicodeEncoding.Unicode.GetString(buffer, 0, lu);
+                    this.Communication.form1.SetDebugTxt(message);
+                    this.Communication.message(buffer);
                 }
                 catch
                 {

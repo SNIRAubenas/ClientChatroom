@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using System.Threading;
+using System.Drawing;
 
 namespace ClientChatroom
 {
@@ -44,11 +45,11 @@ namespace ClientChatroom
             return true;
         }
 
-        public void envoyer(String text,String pseudo)
+        public void envoyer(String text,String pseudo)//Envoie Text
         {
             text = text.Replace("​","");//supprime les characteres invisible qui seront utilisé comme séparateur
 
-            byte[] buffer = ASCIIEncoding.Unicode.GetBytes(text + "​" + pseudo + "​" + "1" /*Le 1 represente le type "text"*/ + "​");
+            byte[] buffer = UnicodeEncoding.Unicode.GetBytes(text + "​" + pseudo + "​" + "1" /*Le 1 represente le type "text"*/ + "​");
             flux.Write(buffer, 0, buffer.Length);
         }
         public void deconection()
@@ -59,6 +60,17 @@ namespace ClientChatroom
                     flux.Close();
             }
         }
+        /*
+        public void envoyer(String Brosse,byte size,Point coords, Color paint)//Envoie dessin
+        {
+            byte[] rgb = BitConverter.GetBytes(paint.ToArgb());
+            String instruction = Brosse + ";" + size + ";" + coords.X + ";" + coords.Y;
+            
+
+            //byte[] buffer = ASCIIEncoding.Unicode.GetBytes(instruction + "​" + "anonym" + "​" + "2" /*Le 2 represente le type "Dessin"*//* + "​" );
+            //flux.Write(buffer, 0, buffer.Length);
+        }
+        */
         public void resevoire()
         {
             do
@@ -66,17 +78,20 @@ namespace ClientChatroom
                 try
                 {
                     byte[] buffer = new byte[1024];
+                    flux.Position = 0;
                     flux.Read(buffer, 0, buffer.Length);
-                    String message = ASCIIEncoding.Unicode.GetString(buffer);
+                    String message = UnicodeEncoding.Unicode.GetString(buffer);
 
                     String[] split = message.Split('​');
 
                     form1.Invoke((MethodInvoker)delegate
                     {
-                        form1.richTextBox1.Text += split[1];
-                        form1.richTextBox1.Text += "\n";
-                        form1.richTextBox1.Text += split[0];
-                        form1.richTextBox1.Text += "\n";
+
+                            form1.richTextBox1.Text += split[1];
+                            form1.richTextBox1.Text += "\n";
+                            form1.richTextBox1.Text += split[0];
+                            form1.richTextBox1.Text += "\n";
+                        
 
                     });
 
