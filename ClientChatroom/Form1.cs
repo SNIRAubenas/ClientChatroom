@@ -69,7 +69,7 @@ namespace ClientChatroom
                
                     ErrorLabel.Visible = false;
                     //Canvas.Enabled = true;
-                
+                    
 
                 }
                 else
@@ -78,6 +78,7 @@ namespace ClientChatroom
                     Deconnexion.Visible = false;
                     Deconnexion.Enabled = false;
                     IPTextBox.Enabled = true;
+                    PseudoBox.Enabled = true;
                 }
 
             }
@@ -91,20 +92,8 @@ namespace ClientChatroom
         }
 
 
-        private void Canvas_Click(object sender, EventArgs e)
-        {
-            MouseEventArgs mea = (MouseEventArgs) e;
-            Point pos = mea.Location;
-
-            
-
-
-        }
-
-
         private void Disconnect_Click(object sender, EventArgs e)
         {
-
             communication.deconection();
 
             Deconnexion.Visible = false;
@@ -112,15 +101,13 @@ namespace ClientChatroom
             Connexion.Visible = true;
             IPTextBox.Enabled = true;
             PortNum.Enabled = true;
-            //Canvas.Enabled = false;
+            PseudoBox.Enabled = true;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             communication.deconection();
             e.Cancel = false;
-            
-
         }
         private Color ColorSetter(int colorIdx)
         {
@@ -208,7 +195,7 @@ namespace ClientChatroom
                     Point pos = new Point();
                     pos.X = (mousePos.X - (px >> 1)) + 1;
                     pos.Y = (mousePos.Y - (px >> 1)) + 1;
-                
+
                     if (roundPen)
                     {
                         communication.envoyer("C", px, pos,drawColor);
@@ -234,12 +221,6 @@ namespace ClientChatroom
             mousePressed = false;
             
         }
-
-        
-            
-            
-
-        
 
     }
 }

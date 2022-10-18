@@ -36,8 +36,6 @@ namespace ClientChatroom
                 flux = client.GetStream();
                 thread = new Thread(() => resevoire());
                 thread.Start();
-                form1.richTextBox1.Text += "ThreadStarted\n";
-                if ( flux.CanWrite) form1.richTextBox1.Text += "devrais Marcher\n";
 
             }
             catch
@@ -49,9 +47,10 @@ namespace ClientChatroom
 
         public void envoyer(String text,String pseudo)//Envoie Text
         {
+
             text = text.Replace("​","");//supprime les characteres invisible qui seront utilisé comme séparateur
 
-            byte[] buffer = UnicodeEncoding.Unicode.GetBytes(text + "​" + pseudo + "​" + "1" /*Le 1 represente le type "text"*/ + "​" + "5,5,5");
+            byte[] buffer = UnicodeEncoding.Unicode.GetBytes("1" + "​" + pseudo + "​" + text);//Le serveur doit décider de la couleur
             flux.Write(buffer, 0, buffer.Length);
         }
         public void deconection()
@@ -61,7 +60,7 @@ namespace ClientChatroom
                 if (thread.IsAlive)
                 {
                     flux.Close();
-                    form1.richTextBox1.Text += "Flux closed\n";
+                    
 
                 }
                    
@@ -73,84 +72,82 @@ namespace ClientChatroom
             byte[] rgb = BitConverter.GetBytes(paint.ToArgb());
             String instruction = Brosse + ";" + size + ";" + coords.X + ";" + coords.Y;
             
-
-            byte[] buffer = ASCIIEncoding.Unicode.GetBytes(instruction + "​" + "anonym" + "​" + "2" /*Le 2 represente le type "Dessin"*/ + "​" + rgb[0] + "," + rgb[1] + "," + rgb[2]);
+            byte[] buffer = ASCIIEncoding.Unicode.GetBytes("2"+ "​" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "​" + instruction);
             flux.Write(buffer, 0, buffer.Length);
+            
         }
         
         public void resevoire()
         {
             do
             {
-                //try
+                
+                byte[] buffer = new byte[1024];
+                    
+                flux.Read(buffer, 0, buffer.Length);
+
+                    
+                String message = UnicodeEncoding.Unicode.GetString(buffer);
+                if (message == null) break;
+                String[] split = message.Split('​');
+
+                String[] rgbSplit = split[1].Split(',');
+                Color printClr = Color.FromArgb(int.Parse(rgbSplit[0]), int.Parse(rgbSplit[1]), int.Parse(rgbSplit[2]));
+
+                switch (split[0])
                 {
+                    case "0":
+                        break;
+                    case "1":
+                        String pseudo = "\n" + split[2] + "\n";
+                        String txt = split[3] + "\n";
+                        form1.Invoke((MethodInvoker)delegate
+                        {
+                            form1.richTextBox1.SelectionColor = printClr;
+                            form1.richTextBox1.SelectionFont = new Font(form1.richTextBox1.Font, FontStyle.Bold);
+                            form1.richTextBox1.AppendText(pseudo);
+                            form1.richTextBox1.SelectionFont = new Font(form1.richTextBox1.Font, FontStyle.Regular);
+                            form1.richTextBox1.AppendText(txt);
+                            form1.richTextBox1.ScrollToCaret();
+                        });
+                        break;
+                    case "2":
+                        String[] instructionSplit = split[2].Split(';');
 
-                    
-                    byte[] buffer = new byte[1024];
-                    
-                    flux.Read(buffer, 0, buffer.Length);
-                    String message = UnicodeEncoding.Unicode.GetString(buffer);
-                    
-                    String[] split = message.Split('​');
+                        byte px = byte.Parse(instructionSplit[1]);
 
-                    
-                    String[] rgbSplit = split[3].Split(',');
-                    Color printClr = Color.FromArgb(int.Parse(rgbSplit[0]), int.Parse(rgbSplit[1]), int.Parse(rgbSplit[2]));
+                        Brush brush = new SolidBrush(printClr);
+                        //String instruction = Brosse + ";" + size + ";" + coords.X + ";" + coords.Y;
 
-                    switch(split[2])
-                    {
-                        case "0":
-                            break;
-                            case "1":
-
-                            form1.Invoke((MethodInvoker)delegate
+                        form1.Invoke((MethodInvoker)delegate
+                        {
+                            if (instructionSplit[0] == "C")
                             {
-                                /*if (split[1] == form1.pseudonym)
-                                {
-                                    form1.ForeColor = Color.Black;
-                                }
-                                else
-                                {
-                                    form1.ForeColor = printClr;
-                                }
-                                */
-                                form1.richTextBox1.Text += split[1];
-                                form1.richTextBox1.Text += "\n";
-                                form1.richTextBox1.Text += split[0];
-                                form1.richTextBox1.Text += "\n";
-                            });
-                            break;
-                            /*
-                            case"2":
-                            form1.Invoke((MethodInvoker)delegate
+                                //communication.envoyer("C", px, pos, drawColor);
+                                form1.canvas.FillEllipse(brush, byte.Parse(instructionSplit[2]), byte.Parse(instructionSplit[3]), px, px);
+
+                            }
+                            else
                             {
-                            
-                                String[] instructions = split[0].Split(';');
+                                //canvas.FillRectangle(brush, pos.X, pos.Y, px, px);
+                                form1.canvas.FillRectangle(brush, byte.Parse(instructionSplit[2]), byte.Parse(instructionSplit[3]), px, px);
+                            }
+                        });
+                        break;
 
-                                byte px = (byte)int.Parse(instructions[1]);
-
-                                Brush brush = new SolidBrush(printClr);
-                                Point pos = new Point();
-                                pos.X = int.Parse(instructions[2]);
-                                pos.Y = int.Parse(instructions[3]);
-
-                                if (instructions[0] == "S")
-                                form1.canvas.FillRectangle(brush, pos.X, pos.Y, px, px);
-                                else
-                                form1.canvas.FillEllipse(brush, pos.X, pos.Y, px, px);
-                            });
-                            break;
-                            */
-                            
-                    }
+                }
+                    //String[] rgbSplit = split[3].Split(',');
+                    
 
                     
+
+                            
+                            
+                            
                     
-                }
-                //catch
-                {
-                    break;
-                }
+
+                    
+              
 
             }while(true);
             //deconection();

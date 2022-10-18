@@ -54,9 +54,6 @@ namespace SeurveurChatroom
             communication.deconexion();
         }
 
-        public void SetDebugTxt(String txt)
-        {
-            LastStream.Text = txt;
-        }
+        
     }
 }

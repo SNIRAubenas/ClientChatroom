@@ -74,9 +74,10 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Enabled = false;
+            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.No;
             this.richTextBox1.Location = new System.Drawing.Point(4, 4);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(449, 449);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
@@ -183,7 +184,6 @@
             this.Canvas.Size = new System.Drawing.Size(224, 224);
             this.Canvas.TabIndex = 12;
             this.Canvas.TabStop = false;
-            this.Canvas.Click += new System.EventHandler(this.Canvas_Click);
             this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseDown);
             this.Canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseMove);
             this.Canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseUp);
@@ -240,7 +240,7 @@
             "Blue",
             "Purple",
             "Magenta",
-            "Fushia",
+            "Fuchsia",
             "Gray",
             "DarkGray",
             "RaInBoW"});

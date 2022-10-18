@@ -58,7 +58,7 @@ namespace SeurveurChatroom
             }
             try
             {
-                listener.Stop();
+                //listener.Stop();
             }
             catch { }
         }
