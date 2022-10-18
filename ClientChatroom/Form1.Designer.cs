@@ -179,6 +179,7 @@
             // Canvas
             // 
             this.Canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Canvas.Enabled = false;
             this.Canvas.Location = new System.Drawing.Point(16, 16);
             this.Canvas.Name = "Canvas";
             this.Canvas.Size = new System.Drawing.Size(224, 224);

@@ -55,15 +55,17 @@ namespace ClientChatroom
                 bool marche = communication.conection(IPTextBox.Text,(int)PortNum.Value);
                 if (marche)
                 {
-                    ErrorLabel.Visible = false;
+                    
                     MessageTextBox.Enabled = true;
                     sendButton.Enabled = true;
-                    Connexion.Visible = false;
+                    Canvas.Enabled = true;
                     Deconnexion.Visible = true;
                     Deconnexion.Enabled = true;
                     PortNum.Enabled = false;
                     PseudoBox.Enabled = false;
                     IPTextBox.Enabled = false;
+                    ErrorLabel.Visible = false;
+                    Connexion.Visible = false;
 
                     this.pseudonym = PseudoBox.Text;
                
@@ -77,6 +79,7 @@ namespace ClientChatroom
                     Connexion.Visible = true;
                     Deconnexion.Visible = false;
                     Deconnexion.Enabled = false;
+                    Canvas.Enabled = false;
                     IPTextBox.Enabled = true;
                     PseudoBox.Enabled = true;
                 }
@@ -98,10 +101,12 @@ namespace ClientChatroom
 
             Deconnexion.Visible = false;
             Deconnexion.Enabled = false;
+            Canvas.Enabled = false;
             Connexion.Visible = true;
             IPTextBox.Enabled = true;
             PortNum.Enabled = true;
             PseudoBox.Enabled = true;
+            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -186,7 +191,7 @@ namespace ClientChatroom
         {
 
             
-            {
+            
                 if (mousePressed)
                 {
                     byte px = (byte)PxUpDown.Value;
@@ -212,7 +217,7 @@ namespace ClientChatroom
 
                 
                 }
-            }
+            
             
         }
 

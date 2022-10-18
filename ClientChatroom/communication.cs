@@ -72,7 +72,7 @@ namespace ClientChatroom
             byte[] rgb = BitConverter.GetBytes(paint.ToArgb());
             String instruction = Brosse + ";" + size + ";" + coords.X + ";" + coords.Y;
             
-            byte[] buffer = ASCIIEncoding.Unicode.GetBytes("2"+ "​" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "​" + instruction);
+            byte[] buffer = ASCIIEncoding.Unicode.GetBytes("2"+ "​" + rgb[2] + "," + rgb[1] + "," + rgb[0] + "​" + instruction);
             flux.Write(buffer, 0, buffer.Length);
             
         }
@@ -83,12 +83,18 @@ namespace ClientChatroom
             {
                 
                 byte[] buffer = new byte[1024];
-                    
-                flux.Read(buffer, 0, buffer.Length);
+                try
+                {
+                    flux.Read(buffer, 0, buffer.Length);
+                }catch (System.IO.IOException)
+                {
+                    return;
+                }
+                
 
                     
                 String message = UnicodeEncoding.Unicode.GetString(buffer);
-                if (message == null) break;
+                //if (message == null) break;//marche pas
                 String[] split = message.Split('​');
 
                 String[] rgbSplit = split[1].Split(',');
@@ -121,17 +127,21 @@ namespace ClientChatroom
 
                         form1.Invoke((MethodInvoker)delegate
                         {
-                            if (instructionSplit[0] == "C")
+                            try 
                             {
-                                //communication.envoyer("C", px, pos, drawColor);
-                                form1.canvas.FillEllipse(brush, byte.Parse(instructionSplit[2]), byte.Parse(instructionSplit[3]), px, px);
+                                if (instructionSplit[0] == "C")
+                                {
+                                    //communication.envoyer("C", px, pos, drawColor);
+                                    form1.canvas.FillEllipse(brush, int.Parse(instructionSplit[2]), int.Parse(instructionSplit[3]), px, px);
 
-                            }
-                            else
-                            {
-                                //canvas.FillRectangle(brush, pos.X, pos.Y, px, px);
-                                form1.canvas.FillRectangle(brush, byte.Parse(instructionSplit[2]), byte.Parse(instructionSplit[3]), px, px);
-                            }
+                                }
+                                else
+                                {
+                                    //canvas.FillRectangle(brush, pos.X, pos.Y, px, px);
+                                    form1.canvas.FillRectangle(brush, int.Parse(instructionSplit[2]), int.Parse(instructionSplit[3]), px, px);
+                                }
+                            } catch (IndexOutOfRangeException) { }
+                            
                         });
                         break;
 
