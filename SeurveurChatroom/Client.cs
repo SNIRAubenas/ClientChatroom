@@ -42,7 +42,6 @@ namespace SeurveurChatroom
                     int lu = stream.Read(buffer, 0, buffer.Length);
                     if (lu == 0)
                     {
-
                         break;
                     }
                     string message = UnicodeEncoding.Unicode.GetString(buffer, 0, lu);
@@ -56,6 +55,8 @@ namespace SeurveurChatroom
                 }
 
             } while (true);
+            //
+            this.Communication.del(stream);
             tcpClient.Close();
 
         }

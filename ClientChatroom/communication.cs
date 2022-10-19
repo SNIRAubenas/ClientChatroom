@@ -34,7 +34,7 @@ namespace ClientChatroom
                 client = new TcpClient();
                 client.Connect(ep);
                 flux = client.GetStream();
-                thread = new Thread(() => resevoire());
+                thread = new Thread(() => recevoire());
                 thread.Start();
 
             }
@@ -62,7 +62,7 @@ namespace ClientChatroom
                 if (thread.IsAlive)
                 {
                     flux.Close();
-                    
+                    form1.deconnexion_affichage();
 
                 }
                    
@@ -76,7 +76,7 @@ namespace ClientChatroom
 
         }
         
-        public void resevoire()
+        public void recevoire()
         {
             do
             {
@@ -93,7 +93,14 @@ namespace ClientChatroom
 
                     
                 String message = UnicodeEncoding.Unicode.GetString(buffer);
-                if (message.StartsWith("\0\0\0\0\0\0\0\0")) continue;
+                if (message.StartsWith("\0\0\0\0\0\0\0\0") )
+                {
+                    form1.Invoke((MethodInvoker)delegate
+                    {
+                        form1.deconnexion_affichage();
+                    });
+                    continue;
+                };
                 String[] split = message.Split('​');
 
                 String[] rgbSplit = split[1].Split(',');
