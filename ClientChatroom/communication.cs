@@ -45,14 +45,16 @@ namespace ClientChatroom
             return true;
         }
 
-        public void envoyer(String text,String pseudo)//Envoie Text
+        public void envoyer(String text)//Envoie Text
         {
 
             text = text.Replace("​","");//supprime les characteres invisible qui seront utilisé comme séparateur
 
-            byte[] buffer = UnicodeEncoding.Unicode.GetBytes("1" + "​" + pseudo + "​" + text);//Le serveur doit décider de la couleur
+            byte[] buffer = UnicodeEncoding.Unicode.GetBytes("1" + "​" + form1.pseudonym + "​" + text);//Le serveur doit décider de la couleur
             flux.Write(buffer, 0, buffer.Length);
         }
+
+        
         public void deconection()
         {
             if (thread != null)
@@ -67,14 +69,11 @@ namespace ClientChatroom
             }
         }
         
-        public void envoyer(String Brosse,byte size,Point coords, Color paint)//Envoie dessin
+        public void envoyer(String instru,bool formated)//Envoie dessin
         {
-            byte[] rgb = BitConverter.GetBytes(paint.ToArgb());
-            String instruction = Brosse + ";" + size + ";" + coords.X + ";" + coords.Y;
-            
-            byte[] buffer = ASCIIEncoding.Unicode.GetBytes("2"+ "​" + rgb[2] + "," + rgb[1] + "," + rgb[0] + "​" + instruction);
+            byte[] buffer = UnicodeEncoding.Unicode.GetBytes(instru);
             flux.Write(buffer, 0, buffer.Length);
-            
+
         }
         
         public void resevoire()
@@ -88,13 +87,13 @@ namespace ClientChatroom
                     flux.Read(buffer, 0, buffer.Length);
                 }catch (System.IO.IOException)
                 {
-                    return;
+                    continue;
                 }
                 
 
                     
                 String message = UnicodeEncoding.Unicode.GetString(buffer);
-                //if (message == null) break;//marche pas
+                if (message.StartsWith("\0\0\0\0\0\0\0\0")) continue;
                 String[] split = message.Split('​');
 
                 String[] rgbSplit = split[1].Split(',');
@@ -103,7 +102,7 @@ namespace ClientChatroom
                 switch (split[0])
                 {
                     case "0":
-                        break;
+                        continue;
                     case "1":
                         String pseudo = "\n" + split[2] + "\n";
                         String txt = split[3] + "\n";
@@ -118,31 +117,64 @@ namespace ClientChatroom
                         });
                         break;
                     case "2":
-                        String[] instructionSplit = split[2].Split(';');
+                        /*
+                            byte px = (byte)PxUpDown.Value;
 
-                        byte px = byte.Parse(instructionSplit[1]);
+                            short xpos = (short)((mousePos.X - (px >> 1)) + 1);
+                            short ypos = (short)((mousePos.Y - (px >> 1)) + 1);
 
-                        Brush brush = new SolidBrush(printClr);
-                        //String instruction = Brosse + ";" + size + ";" + coords.X + ";" + coords.Y;
+                            byte[] instructions = new byte[5];
 
-                        form1.Invoke((MethodInvoker)delegate
-                        {
-                            try 
+                            if (roundPen)
                             {
-                                if (instructionSplit[0] == "C")
-                                {
-                                    //communication.envoyer("C", px, pos, drawColor);
-                                    form1.canvas.FillEllipse(brush, int.Parse(instructionSplit[2]), int.Parse(instructionSplit[3]), px, px);
+                                instructions[0] = 0b01_000000;
+                            }
+                            else
+                            {
+                                instructions[0] = 0b10_000000;
+                            }
+                            instructions[0] |= px;
+                            instructions[1] = (byte) (xpos & 0b11111111);
+                            instructions[2] = (byte) ((xpos & 0b11111111_00000000) >> 8);
+                            instructions[3] = (byte)(ypos & 0b11111111);
+                            instructions[4] = (byte)((ypos & 0b11111111_00000000) >> 8);
+                            instructions[5] = 0;
+                         */
+                        byte[] allInstructions = UnicodeEncoding.Unicode.GetBytes(split[2]);
 
-                                }
-                                else
+                        byte brush = 0;
+                        byte px = 0;
+                        short xPos = 0,yPos = 0;
+
+
+                        for (short i = 0; i < allInstructions.Length - 3; i += 6)
+                        {
+                            if ((allInstructions[i] & 0b01_000000) == 0b01_000000) brush = 1;
+                            else brush = 2;
+                            px = (byte)(allInstructions[i] & 0b00_111111);
+
+                            xPos = (short)((allInstructions[i + 1] & 0b1111_1111) + ((allInstructions[i + 2] & 0b1111_1111) << 8));
+                            yPos = (short)((allInstructions[i + 3] & 0b1111_1111) + ((allInstructions[i + 4] & 0b1111_1111) << 8));
+
+
+                            form1.Invoke((MethodInvoker)delegate
+                            {
+                                Brush b = new SolidBrush(printClr);
+                                form1.richTextBox1.AppendText(" RECU ");
+                                if (brush == 0b01_000000)
                                 {
-                                    //canvas.FillRectangle(brush, pos.X, pos.Y, px, px);
-                                    form1.canvas.FillRectangle(brush, int.Parse(instructionSplit[2]), int.Parse(instructionSplit[3]), px, px);
+
+
+                                    form1.canvas.FillEllipse(b, xPos, yPos, px, px);
                                 }
-                            } catch (IndexOutOfRangeException) { }
-                            
-                        });
+                                else if (brush == 0b10_000000)
+                                {
+                                    form1.canvas.FillRectangle(b, xPos, yPos, px, px);
+                                }
+                            });
+                        }
+
+                        
                         break;
 
                 }

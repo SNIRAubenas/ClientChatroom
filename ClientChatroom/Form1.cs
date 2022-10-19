@@ -16,14 +16,16 @@ namespace ClientChatroom
     {
         communication communication;
 
-
+        private byte paintCounter = 0;
         public Graphics canvas;
         public String pseudonym;
+
+        private String paintBuffer = "";
 
         bool roundPen = true, mousePressed = false;
 
 
-
+        private String stringColor = "0,0,0";
         private Color drawColor;
         public Form1()
         {
@@ -32,14 +34,16 @@ namespace ClientChatroom
             ColorPick.SelectedIndex = 0;
 
             canvas = Canvas.CreateGraphics();
-           
-        }
+
+            paintBuffer = "2" + "​" + stringColor + "​";
+
+    }
 
         private void sendButton_Click(object sender, EventArgs e)
         {
             if(MessageTextBox.Text.Length > 0)
             {
-                communication.envoyer(MessageTextBox.Text,PseudoBox.Text);
+                communication.envoyer(MessageTextBox.Text);
 
             }
 
@@ -49,6 +53,16 @@ namespace ClientChatroom
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
+            if (PseudoBox.Text == "") 
+            {
+                ErrorLabel.Text = "Entrez un Psuedonym svp";
+                ErrorLabel.ForeColor = Color.Red;
+                ErrorLabel.Visible = true;
+                IPTextBox.Enabled = true;
+                PseudoBox.Enabled = true;
+                return;
+            }
+
             Regex ipV4 = new Regex("^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
             if (ipV4.IsMatch(IPTextBox.Text))
             {
@@ -67,7 +81,7 @@ namespace ClientChatroom
                     ErrorLabel.Visible = false;
                     Connexion.Visible = false;
 
-                    this.pseudonym = PseudoBox.Text;
+                    this.pseudonym = PseudoBox.Text.Replace("​", ""); ;
                
                     ErrorLabel.Visible = false;
                     //Canvas.Enabled = true;
@@ -91,6 +105,7 @@ namespace ClientChatroom
                 ErrorLabel.ForeColor = Color.Red;
                 ErrorLabel.Visible = true;
                 IPTextBox.Enabled = true;
+                PseudoBox.Enabled = true;
             }
         }
 
@@ -121,41 +136,58 @@ namespace ClientChatroom
             switch (colorIdx)
             {
                 case 0:
+                    stringColor = "0,0,0";
                     return Color.FromArgb(0, 0, 0);//Black
-                    
                 case 1:
+                    stringColor = "255,255,255";
                     return Color.FromArgb(255, 255, 255);//White
                 case 2:
+                    stringColor = "255,0,0";
                     return Color.FromArgb(255, 0, 0);//Red
                 case 3:
+                    stringColor = "255,128,0";
                     return Color.FromArgb(255, 128, 0);//Orange
                 case 4:
+                    stringColor = "255,255,0";
                     return Color.FromArgb(255, 255, 0);//Yellow
                 case 5:
+                    stringColor = "128,255,0";
                     return Color.FromArgb(128, 255, 0);//Jungle
                 case 6:
+                    stringColor = "0,255,0";
                     return Color.FromArgb(0, 255, 0);//Green
                 case 7:
+                    stringColor = "0,255,128";
                     return Color.FromArgb(0, 255, 128);//Teal
                 case 8:
+                    stringColor = "0,255,255";
                     return Color.FromArgb(0, 255, 255);//Cyan
                 case 9:
+                    stringColor = "0,128,255";
                     return Color.FromArgb(0, 128, 255);//Sky
                 case 10:
+                    stringColor = "0,0,255";
                     return Color.FromArgb(0, 0, 255);//Blue
                 case 11:
+                    stringColor = "128,0,255";
                     return Color.FromArgb(128, 0, 255);//Purple
                 case 12:
+                    stringColor = "255,0,255";
                     return Color.FromArgb(255, 0, 255);//Magenta
                 case 13:
+                    stringColor = "255,0,128";
                     return Color.FromArgb(255, 0, 128);//Fushia
                 case 14:
+                    stringColor = "128,128,128";
                     return Color.FromArgb(128, 128, 128);//Gray
                 case 15:
+                    stringColor = "64,64,64";
                     return Color.FromArgb(64, 64, 64);//DarkGray
                 default:
                     Random rd = new Random();
-                    return Color.FromArgb(rd.Next(256), rd.Next(256), rd.Next(256));
+                    byte r = (byte)rd.Next(256); byte g = (byte)rd.Next(256); byte b = (byte)rd.Next(256);
+                    stringColor = r + "," + g + "," + b;
+                    return Color.FromArgb(r,g,b);
 
             }
         }
@@ -164,7 +196,9 @@ namespace ClientChatroom
             //fin du switch
             drawColor = ColorSetter(ColorPick.SelectedIndex);
             ColorPickedLabel.BackColor = drawColor;
-        }
+
+            paintBuffer = "2" + "​" + stringColor + "​";
+    }
 
         private void RoundBrush_Click(object sender, EventArgs e)
         {
@@ -189,36 +223,48 @@ namespace ClientChatroom
 
         private void Canvas_MouseMove(object sender, MouseEventArgs mousePos)
         {
+            
 
-            
-            
-                if (mousePressed)
+            if (mousePressed && (paintCounter < 128))
+            {
+                paintCounter++;
+
+                byte px = (byte)PxUpDown.Value;
+
+                short xpos = (short)((mousePos.X - (px >> 1)) + 1);
+                short ypos = (short)((mousePos.Y - (px >> 1)) + 1);
+
+                byte[] instructions = new byte[6];
+
+                if (roundPen)
                 {
-                    byte px = (byte)PxUpDown.Value;
-
-                    Brush brush = new SolidBrush(drawColor);
-                    Point pos = new Point();
-                    pos.X = (mousePos.X - (px >> 1)) + 1;
-                    pos.Y = (mousePos.Y - (px >> 1)) + 1;
-
-                    if (roundPen)
-                    {
-                        communication.envoyer("C", px, pos,drawColor);
-                        //canvas.FillEllipse(brush, pos.X, pos.Y, px, px);
-
-                    }
-                    else
-                    {
-                        //canvas.FillRectangle(brush, pos.X, pos.Y, px, px);
-                        communication.envoyer("S",px,pos,drawColor);
-                    }
-
-
-
-                
+                    instructions[0] = 0b01_000000;
                 }
-            
-            
+                else
+                {
+                    instructions[0] = 0b10_000000;
+                }
+                instructions[0] |= px;
+                instructions[1] = (byte) (xpos & 0b11111111);
+                instructions[2] = (byte) ((xpos & 0b11111111_00000000) >> 8);
+                instructions[3] = (byte)(ypos & 0b11111111);
+                instructions[4] = (byte)((ypos & 0b11111111_00000000) >> 8);
+                instructions[5] = 0;
+
+                paintBuffer += UnicodeEncoding.Unicode.GetString(instructions);
+
+            }
+            else
+            {
+                if (paintCounter == 0) return;
+                communication.envoyer(paintBuffer,true);
+                paintCounter = 0;
+                paintBuffer = "2" + "​" + stringColor + "​";
+                richTextBox1.AppendText("sent draw");
+            }
+
+
+
         }
 
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
