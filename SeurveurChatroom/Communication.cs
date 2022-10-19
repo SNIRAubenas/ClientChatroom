@@ -79,5 +79,9 @@ namespace SeurveurChatroom
             }
         }
 
+        internal void del(NetworkStream stream)
+        {
+            networkStream.Remove(stream);
+        }
     }
 }
