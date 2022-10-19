@@ -21,7 +21,7 @@ namespace SeurveurChatroom
             this.form1 = form1;
             networkStream = new List<NetworkStream>();
 
-            IPAddress iPAddress = IPAddress.Parse("10.0.0.109");
+            IPAddress iPAddress = IPAddress.Parse("10.0.0.123");
             int port = 18;
             listener = new TcpListener(iPAddress, port);
 

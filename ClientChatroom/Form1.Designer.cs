@@ -185,6 +185,7 @@
             this.Canvas.Size = new System.Drawing.Size(224, 224);
             this.Canvas.TabIndex = 12;
             this.Canvas.TabStop = false;
+            this.Canvas.Click += new System.EventHandler(this.Canvas_Click);
             this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseDown);
             this.Canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseMove);
             this.Canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseUp);

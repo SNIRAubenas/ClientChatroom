@@ -231,8 +231,9 @@ namespace ClientChatroom
 
             
             
-                if (mousePressed)
+                if (mousePressed && (paintCounter < 24))
                 {
+                    paintCounter++;
                     byte px = (byte)PxUpDown.Value;
 
                 short xpos = (short)((mousePos.X - (px >> 1)) + 1);
@@ -264,11 +265,40 @@ namespace ClientChatroom
                 communication.envoyer(paintBuffer,true);
                 paintCounter = 0;
                 paintBuffer = "2" + "​" + stringColor + "​";
-                richTextBox1.AppendText("sent draw");
+                richTextBox1.AppendText(" sent draw ");
             }
 
 
 
+        }
+
+        private void Canvas_Click(object sender, EventArgs mouse)
+        {
+            byte px = (byte)PxUpDown.Value;
+
+            MouseEventArgs mea = (MouseEventArgs)mouse;
+
+            short xpos = (short)((mea.X - (px >> 1)) + 1);
+            short ypos = (short)((mea.Y - (px >> 1)) + 1);
+
+            byte[] instructions = new byte[6];
+
+            if (roundPen)
+            {
+                instructions[0] = 0b01_000000;
+            }
+            else
+            {
+                instructions[0] = 0b10_000000;
+            }
+            instructions[0] |= px;
+            instructions[1] = (byte)(xpos & 0b11111111);
+            instructions[2] = (byte)((xpos & 0b11111111_00000000) >> 8);
+            instructions[3] = (byte)(ypos & 0b11111111);
+            instructions[4] = (byte)((ypos & 0b11111111_00000000) >> 8);
+            instructions[5] = 0;
+
+            communication.envoyer("2" + "​" + stringColor + "​" + UnicodeEncoding.Unicode.GetString(instructions), true);
         }
 
         private void Canvas_MouseUp(object sender, MouseEventArgs e)

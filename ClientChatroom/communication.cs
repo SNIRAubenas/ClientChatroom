@@ -154,32 +154,32 @@ namespace ClientChatroom
                         short xPos = 0,yPos = 0;
 
 
-                        for (short i = 0; i < allInstructions.Length - 3; i += 6)
-                        {
-                            if ((allInstructions[i] & 0b01_000000) == 0b01_000000) brush = 1;
-                            else brush = 2;
-                            px = (byte)(allInstructions[i] & 0b00_111111);
+                    for (short i = 0; i < allInstructions.Length - 4; i += 6)
+                    {
+                        if ((allInstructions[i] & 0b01_000000) == 0b01_000000) brush = 1;
+                        else brush = 2;
+                        px = (byte)(allInstructions[i] & 0b00_111111);
 
-                            xPos = (short)((allInstructions[i + 1] & 0b1111_1111) + ((allInstructions[i + 2] & 0b1111_1111) << 8));
+                        xPos = (short)((allInstructions[i + 1] & 0b1111_1111) + ((allInstructions[i + 2] & 0b1111_1111) << 8));
                             yPos = (short)((allInstructions[i + 3] & 0b1111_1111) + ((allInstructions[i + 4] & 0b1111_1111) << 8));
 
-
+                            if (brush == 0) break;
                             form1.Invoke((MethodInvoker)delegate
                             {
+                                
                                 Brush b = new SolidBrush(printClr);
-                                form1.richTextBox1.AppendText(" RECU ");
-                                if (brush == 0b01_000000)
+                                
+                                if (brush == 1)
                                 {
-
-
                                     form1.canvas.FillEllipse(b, xPos, yPos, px, px);
                                 }
-                                else if (brush == 0b10_000000)
+                                else if (brush == 2)
                                 {
                                     form1.canvas.FillRectangle(b, xPos, yPos, px, px);
                                 }
+                               
                             });
-                        }
+                    }
 
                         
                         break;
