@@ -25,7 +25,7 @@ namespace SeurveurChatroom
             int port = 18;
             listener = new TcpListener(iPAddress, port);
             
-
+            //comm
         }
         public void conection()
         {
