@@ -34,7 +34,7 @@ namespace ClientChatroom
                 client = new TcpClient();
                 client.Connect(ep);
                 flux = client.GetStream();
-                thread = new Thread(() => resevoire());
+                thread = new Thread(() => recevoire());
                 thread.Start();
 
             }
@@ -60,7 +60,7 @@ namespace ClientChatroom
                 if (thread.IsAlive)
                 {
                     flux.Close();
-                    
+                    form1.deconnexion_affichage();
 
                 }
                    
@@ -69,15 +69,22 @@ namespace ClientChatroom
         
         public void envoyer(String Brosse,byte size,Point coords, Color paint)//Envoie dessin
         {
-            byte[] rgb = BitConverter.GetBytes(paint.ToArgb());
-            String instruction = Brosse + ";" + size + ";" + coords.X + ";" + coords.Y;
+            try
+            {
+                byte[] rgb = BitConverter.GetBytes(paint.ToArgb());
+                String instruction = Brosse + ";" + size + ";" + coords.X + ";" + coords.Y;
             
-            byte[] buffer = ASCIIEncoding.Unicode.GetBytes("2"+ "​" + rgb[2] + "," + rgb[1] + "," + rgb[0] + "​" + instruction);
-            flux.Write(buffer, 0, buffer.Length);
+                byte[] buffer = ASCIIEncoding.Unicode.GetBytes("2"+ "​" + rgb[2] + "," + rgb[1] + "," + rgb[0] + "​" + instruction);
+                flux.Write(buffer, 0, buffer.Length);
+            }
+            catch
+            {
+                return;
+            }
             
         }
         
-        public void resevoire()
+        public void recevoire()
         {
             do
             {
@@ -88,13 +95,20 @@ namespace ClientChatroom
                     flux.Read(buffer, 0, buffer.Length);
                 }catch (System.IO.IOException)
                 {
-                    return;
+                    break;
                 }
                 
 
                     
                 String message = UnicodeEncoding.Unicode.GetString(buffer);
-                //if (message == null) break;//marche pas
+                if (message.StartsWith("\0\0\0\0\0\0\0\0") )
+                {
+                    form1.Invoke((MethodInvoker)delegate
+                    {
+                        form1.deconnexion_affichage();
+                    });
+                    continue;
+                };
                 String[] split = message.Split('​');
 
                 String[] rgbSplit = split[1].Split(',');

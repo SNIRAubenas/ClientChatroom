@@ -14,6 +14,7 @@ namespace ClientChatroom
 {
     public partial class Form1 : Form
     {
+        bool ok=true;
         communication communication;
 
 
@@ -98,7 +99,12 @@ namespace ClientChatroom
         private void Disconnect_Click(object sender, EventArgs e)
         {
             communication.deconection();
+            deconnexion_affichage();
 
+            
+        }
+        public void deconnexion_affichage()
+        {
             Deconnexion.Visible = false;
             Deconnexion.Enabled = false;
             Canvas.Enabled = false;
@@ -106,7 +112,6 @@ namespace ClientChatroom
             IPTextBox.Enabled = true;
             PortNum.Enabled = true;
             PseudoBox.Enabled = true;
-            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -189,7 +194,8 @@ namespace ClientChatroom
 
         private void Canvas_MouseMove(object sender, MouseEventArgs mousePos)
         {
-
+            ok = !ok;
+            if(!ok )return;
             
             
                 if (mousePressed)

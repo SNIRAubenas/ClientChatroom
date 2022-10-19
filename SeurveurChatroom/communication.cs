@@ -20,34 +20,38 @@ namespace SeurveurChatroom
         {
             this.form1 = form1;
             networkStream = new List<NetworkStream>();
+
+            IPAddress iPAddress = IPAddress.Parse("10.0.0.109");
+            int port = 18;
+            listener = new TcpListener(iPAddress, port);
+
+
         }
         public void conection()
         {
-            IPAddress iPAddress = IPAddress.Parse("127.0.0.1");
-            int port = 18;
-            listener = new TcpListener(iPAddress, port);
             listener.Start();
             do
             {
                 try
                 {
                     TcpClient tcpClient = listener.AcceptTcpClient();
-                    Client client = new Client(tcpClient,this);
+                    Client client = new Client(tcpClient, this);
 
                 }
-                catch
+                catch (System.Net.Sockets.SocketException)
                 {
                     break;
                 }
 
             } while (true);
+            deconexion();
 
         }
         public void init()
         {
             Thread thread = new Thread(() => conection());
             thread.Start();
-            
+
 
         }
         public void deconexion()
@@ -55,12 +59,13 @@ namespace SeurveurChatroom
             foreach (NetworkStream stream in networkStream)
             {
                 stream.Close();
+
             }
             try
             {
                 listener.Stop();
             }
-            catch { }
+            catch (System.IO.IOException) { }
         }
         public void add(NetworkStream stream)
         {
@@ -68,12 +73,16 @@ namespace SeurveurChatroom
         }
         public void message(Byte[] bytes)
         {
-
-            foreach(NetworkStream stream in networkStream)
+            foreach (NetworkStream stream in networkStream)
             {
-                stream.Write(bytes,0,bytes.Length);
+                stream.Write(bytes, 0, bytes.Length);
             }
+
         }
 
+        internal void del(NetworkStream stream)
+        {
+            networkStream.Remove(stream);
+        }
     }
 }

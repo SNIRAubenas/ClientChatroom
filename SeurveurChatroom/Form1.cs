@@ -19,7 +19,7 @@ namespace SeurveurChatroom
             communication = new Communication(this);
         }
 
-        bool workin = false;
+        public bool workin = false;
 
         private void button_Click(object sender, EventArgs e)
         {
@@ -53,6 +53,7 @@ namespace SeurveurChatroom
         {
             communication.deconexion();
         }
+        
 
         
     }
